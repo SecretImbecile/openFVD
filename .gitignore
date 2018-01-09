@@ -34,3 +34,5 @@
 # QT Crap
 *.pro.user
 *.user
+
+# Binary Files
