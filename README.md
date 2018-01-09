@@ -130,7 +130,7 @@ v0.1 Alpha:
 
 #### I don't know how to do XY:
 - read through the official documentation, this document should explain nearly every feature of FVD++
-- Ask in the force vector design thread on [Nolimits Central](https://nolimitscentral.com/forum/topic/44?page=2#c1103).
+- Ask in the force vector design thread on [Nolimits Central](https://nolimitscentral.com/forum/topic/44).
 
 ## Found a Bug / Crash
 
