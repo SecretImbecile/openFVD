@@ -1,6 +1,6 @@
 # open FVD++ v0.8(?) #
 
-Fork of openFVD, originally created by Stephan (Lenny) Alt et al., 2012-2016, alt.stephan@web.de
+Fork of [openFVD](https://github.com/altlenny/openFVD), originally created by Stephan (Lenny) Alt et al., 2012-2016, alt.stephan@web.de
 
 # Introduction #
 
