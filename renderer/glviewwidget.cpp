@@ -67,7 +67,7 @@ glViewWidget::glViewWidget(QWidget *parent) : QGLWidget(parent) {
 	occlusionFb = NULL;
 	preDistortionFb = NULL;
 	floorOpacity = 0.8;
-	initialized = 0;
+    initialized = 0;
 }
 
 glViewWidget::~glViewWidget()
@@ -896,8 +896,8 @@ void glViewWidget::mousePressEvent(QMouseEvent *event)
 	}
 	if(moveMode)
 	{
-		setCursor(QCursor(Qt::BlankCursor));
-		mousePos = this->cursor().pos();
+        setCursor(QCursor(Qt::BlankCursor));
+        mousePos = this->cursor().pos();
 		if(this->mapFromGlobal(mousePos).x() < 80)
 		{
 			mousePos.setX(this->mapToGlobal(QPoint(80, this->mapFromGlobal(mousePos).y())).x());
@@ -919,7 +919,7 @@ void glViewWidget::mousePressEvent(QMouseEvent *event)
 		this->setFocus();
 		this->grabKeyboard();
 		hasChanged = true;
-		//this->cursor().setPos(this->mapToGlobal(QPoint(this->width()/2.0, this->height()/2.0)));
+        //this->cursor().setPos(this->mapToGlobal(QPoint(this->width()/2.0, this->height()/2.0)));
 	}
 	else
 	{
@@ -1146,9 +1146,9 @@ void glViewWidget::initTextures()
 		{
 			//float col = std::min(fabs(i-RASTER_SIZE/2.f), fabs(j-RASTER_SIZE/2.f))/(RASTER_SIZE/2.f);
 			double major = std::min(fabs(i-RASTER_SIZE/2.f), fabs(j-RASTER_SIZE/2.f))/(RASTER_SIZE/2.f);
-			double minor = std::min(std::min(fabs(((i+(RASTER_SIZE/20))%(RASTER_SIZE/10)-(RASTER_SIZE/20.f))), fabs(((j+(RASTER_SIZE/20))%(RASTER_SIZE/10)-(RASTER_SIZE/20.f)))), 1.);
+            double minor = std::min((double)std::min(fabs(((i+(RASTER_SIZE/20))%(RASTER_SIZE/10)-(RASTER_SIZE/20.f))), fabs(((j+(RASTER_SIZE/20))%(RASTER_SIZE/10)-(RASTER_SIZE/20.f)))), 1.);
 			major = 1-major;
-			minor = 1-minor;
+            minor = 1-minor;
 			for(int k = 0; k < 9; ++k)
 			{
 				major *= major;
