@@ -19,81 +19,76 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <fstream>
 #include <QList>
+#include <fstream>
 
 class func;
 
-enum eDegree
-{
-    linear = 0,
-    quadratic = 1,
-    cubic = 2,
-    quartic = 3,
-    quintic = 4,
-    sinusoidal = 5,
-    plateau = 6,
-    tozero = 7,
-    freeform = 8
+enum eDegree {
+  linear = 0,
+  quadratic = 1,
+  cubic = 2,
+  quartic = 3,
+  quintic = 4,
+  sinusoidal = 5,
+  plateau = 6,
+  tozero = 7,
+  freeform = 8
 };
 
-typedef struct bez_s
-{
-    float x;
-    float y;
+typedef struct bez_s {
+  float x;
+  float y;
 } bez_t;
 
-class subfunc
-{
+class subfunc {
 public:
-    subfunc();
-    subfunc(float min, float max, float start, float diff, func* getparent = 0);
-    void update(float min, float max, float diff);
+  subfunc();
+  subfunc(float min, float max, float start, float diff, func *getparent = 0);
+  void update(float min, float max, float diff);
 
-    float getValue(float x);
+  float getValue(float x);
 
-    void changeDegree(eDegree newDegree);
-    void updateBez();
+  void changeDegree(eDegree newDegree);
+  void updateBez();
 
-    float getMinValue();
-    float getMaxValue();
+  float getMinValue();
+  float getMaxValue();
 
-    void translateValues(float newStart);
+  void translateValues(float newStart);
 
-    bool isSymmetric();
-    float endValue();
+  bool isSymmetric();
+  float endValue();
 
-    void saveSubFunc(std::fstream& file);
-    void loadSubFunc(std::fstream& file);
-    void legacyLoadSubFunc(std::fstream& file);
-    void saveSubFunc(std::stringstream& file);
-    void loadSubFunc(std::stringstream& file);
+  void saveSubFunc(std::fstream &file);
+  void loadSubFunc(std::fstream &file);
+  void legacyLoadSubFunc(std::fstream &file);
+  void saveSubFunc(std::stringstream &file);
+  void loadSubFunc(std::stringstream &file);
 
-    float minArgument;
-    float maxArgument;
+  float minArgument;
+  float maxArgument;
 
-    float startValue;
+  float startValue;
 
-    float arg1;
-    float symArg;
+  float arg1;
+  float symArg;
 
-    bool locked;
+  bool locked;
 
-    //timewarp arguments
-    float centerArg;
-    float tensionArg;
+  // timewarp arguments
+  float centerArg;
+  float tensionArg;
 
-    enum eDegree degree;
+  enum eDegree degree;
 
-
-    func* parent;
-    QList<bez_t> pointList;
-    QList<float> valueList;
+  func *parent;
+  QList<bez_t> pointList;
+  QList<float> valueList;
 
 private:
-    float applyTension(float x);
-    float applyCenter(float x);
+  float applyTension(float x);
+  float applyCenter(float x);
 };
-
 
 #endif // SUBFUNCTION_H

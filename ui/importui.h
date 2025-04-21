@@ -19,32 +19,31 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QDialog>
 #include "projectwidget.h"
+#include <QDialog>
 
 namespace Ui {
 class importUi;
 }
 
-class importUi : public QDialog
-{
-    Q_OBJECT
-    
-public:
-    explicit importUi(QWidget *parent, QString _fileName);
-    QList<trackHandler*> trackList;
-    QList<int> posList;
-    ~importUi();
-    
-private slots:
-    void on_buttonBox_accepted();
+class importUi : public QDialog {
+  Q_OBJECT
 
-    void on_buttonBox_rejected();
+public:
+  explicit importUi(QWidget *parent, QString _fileName);
+  QList<trackHandler *> trackList;
+  QList<int> posList;
+  ~importUi();
+
+private slots:
+  void on_buttonBox_accepted();
+
+  void on_buttonBox_rejected();
 
 private:
-    Ui::importUi *ui;
-    QString fileName;
-    bool legacymode;
+  Ui::importUi *ui;
+  QString fileName;
+  bool legacymode;
 };
 
 #endif // IMPORTUI_H

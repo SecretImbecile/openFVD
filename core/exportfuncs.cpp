@@ -21,193 +21,199 @@
 
 using namespace std;
 
-void writeBytes(fstream *file, const char* data, size_t length )
-{
-    for(size_t i = 0; i < length; i++) {
-        file->write(data+length-1-i, 1);
-    }
+void writeBytes(fstream *file, const char *data, size_t length) {
+  for (size_t i = 0; i < length; i++) {
+    file->write(data + length - 1 - i, 1);
+  }
 }
 
-void writeNulls(fstream *file , size_t length )
-{
-    char data[1] = {0x00};
-    for(size_t i = 0; i < length; i++) {
-        writeBytes(file, data, 1);
-    }
+void writeFloats(fstream *file, const float data) {
+  *file << std::fixed << std::setprecision(2) << data;
+  // optionally add a delimiter (e.g., space or newline) between floats
+  *file << " "; // add space as a delimiter
 }
 
-string readString(fstream *file, size_t length)
-{
-    string temp = "";
-    char c;
-    for(size_t i = 0; i < length; ++i) {
-        file->get(c);
-        temp.append(1, c);
-    }
-    return temp;
+void writeNulls(fstream *file, size_t length) {
+  char data[1] = {0x00};
+  for (size_t i = 0; i < length; i++) {
+    writeBytes(file, data, 1);
+  }
 }
 
-bool readNulls(fstream *file, size_t length)
-{
-    char c;
-    for(size_t i = 0; i < length; ++i) {
-        file->get(c);
-    }
-    return true;
+string readString(fstream *file, size_t length) {
+  string temp = "";
+  char c;
+  for (size_t i = 0; i < length; ++i) {
+    file->get(c);
+    temp.append(1, c);
+  }
+  return temp;
 }
 
-glm::vec3 readVec3(fstream *file)
-{
-    glm::vec3 temp(readFloat(file), readFloat(file), readFloat(file));
-    return temp;
+bool readNulls(fstream *file, size_t length) {
+  char c;
+  for (size_t i = 0; i < length; ++i) {
+    file->get(c);
+  }
+  return true;
 }
 
-float readFloat(fstream *file)
-{
-    union {
-        char c[4];
-        float f;
-    } temp;
-    file->get(temp.c[3]);
-    file->get(temp.c[2]);
-    file->get(temp.c[1]);
-    file->get(temp.c[0]);
-    return temp.f;
+glm::vec3 readVec3(fstream *file) {
+  glm::vec3 temp(readFloat(file), readFloat(file), readFloat(file));
+  return temp;
 }
 
-int readInt(fstream *file)
-{
-    union {
-        char c[4];
-        int i;
-    } temp;
-    file->get(temp.c[3]);
-    file->get(temp.c[2]);
-    file->get(temp.c[1]);
-    file->get(temp.c[0]);
-    return temp.i;
+float readFloat(fstream *file) {
+  union {
+    char c[4];
+    float f;
+  } temp;
+  file->get(temp.c[3]);
+  file->get(temp.c[2]);
+  file->get(temp.c[1]);
+  file->get(temp.c[0]);
+  return temp.f;
 }
 
-bool readBool(fstream *file)
-{
-    char temp;
-    file->get(temp);
-    return temp != 0;
+int readInt(fstream *file) {
+  union {
+    char c[4];
+    int i;
+  } temp;
+  file->get(temp.c[3]);
+  file->get(temp.c[2]);
+  file->get(temp.c[1]);
+  file->get(temp.c[0]);
+  return temp.i;
 }
 
-void readBytes(fstream *file, void* _ptr, size_t length)
-{
-    for(size_t i = 0; i < length; i++) {
-        file->read((char*)_ptr+length-1-i, 1);
-    }
+bool readBool(fstream *file) {
+  char temp;
+  file->get(temp);
+  return temp != 0;
 }
 
-
-void writeBytes(stringstream *file, const char* data, size_t length )
-{
-    for(size_t i = 0; i < length; i++) {
-        file->write(data+length-1-i, 1);
-    }
+void readBytes(fstream *file, void *_ptr, size_t length) {
+  for (size_t i = 0; i < length; i++) {
+    file->read((char *)_ptr + length - 1 - i, 1);
+  }
 }
 
-void writeNulls(stringstream *file , size_t length )
-{
-    char data[1] = {0x00};
-    for(size_t i = 0; i < length; i++) {
-        writeBytes(file, data, 1);
-    }
+void writeBytes(stringstream *file, const char *data, size_t length) {
+  for (size_t i = 0; i < length; i++) {
+    file->write(data + length - 1 - i, 1);
+  }
 }
 
-string readString(stringstream *file, size_t length)
-{
-    string temp = "";
-    char c;
-    for(size_t i = 0; i < length; ++i) {
-        file->get(c);
-        temp.append(1, c);
-    }
-    return temp;
+void writeNulls(stringstream *file, size_t length) {
+  char data[1] = {0x00};
+  for (size_t i = 0; i < length; i++) {
+    writeBytes(file, data, 1);
+  }
 }
 
-bool readNulls(stringstream *file, size_t length)
-{
-    char c;
-    for(size_t i = 0; i < length; ++i) {
-        file->get(c);
-        //if(c) return false;
-    }
-    return true;
+string readString(stringstream *file, size_t length) {
+  string temp = "";
+  char c;
+  for (size_t i = 0; i < length; ++i) {
+    file->get(c);
+    temp.append(1, c);
+  }
+  return temp;
 }
 
-glm::vec3 readVec3(stringstream *file)
-{
-    glm::vec3 temp(readFloat(file), readFloat(file), readFloat(file));
-    return temp;
+bool readNulls(stringstream *file, size_t length) {
+  char c;
+  for (size_t i = 0; i < length; ++i) {
+    file->get(c);
+    // if(c) return false;
+  }
+  return true;
 }
 
-float readFloat(stringstream *file)
-{
-    union {
-        char c[4];
-        float f;
-    } temp;
-    file->get(temp.c[3]);
-    file->get(temp.c[2]);
-    file->get(temp.c[1]);
-    file->get(temp.c[0]);
-    return temp.f;
+glm::vec3 readVec3(stringstream *file) {
+  glm::vec3 temp(readFloat(file), readFloat(file), readFloat(file));
+  return temp;
 }
 
-int readInt(stringstream *file)
-{
-    union {
-        char c[4];
-        int i;
-    } temp;
-    file->get(temp.c[3]);
-    file->get(temp.c[2]);
-    file->get(temp.c[1]);
-    file->get(temp.c[0]);
-    return temp.i;
+float readFloat(stringstream *file) {
+  union {
+    char c[4];
+    float f;
+  } temp;
+  file->get(temp.c[3]);
+  file->get(temp.c[2]);
+  file->get(temp.c[1]);
+  file->get(temp.c[0]);
+  return temp.f;
 }
 
-bool readBool(stringstream *file)
-{
-    char temp;
-    file->get(temp);
-    return temp != 0;
+int readInt(stringstream *file) {
+  union {
+    char c[4];
+    int i;
+  } temp;
+  file->get(temp.c[3]);
+  file->get(temp.c[2]);
+  file->get(temp.c[1]);
+  file->get(temp.c[0]);
+  return temp.i;
 }
 
-void readBytes(stringstream *file, void* _ptr, size_t length)
-{
-    for(size_t i = 0; i < length; i++) {
-        file->read((char*)_ptr+length-1-i, 1);
-    }
+bool readBool(stringstream *file) {
+  char temp;
+  file->get(temp);
+  return temp != 0;
 }
 
-void writeToExportFile(std::fstream *file, QList<bezier_t*> &bezList)
-{
-    for(int i = 0; i < bezList.size(); ++i) {
-        writeBytes(file, (const char*)&bezList[i]->Kp1.x, 4);
-        writeBytes(file, (const char*)&bezList[i]->Kp1.y, 4);
-        writeBytes(file, (const char*)&bezList[i]->Kp1.z, 4);
+void readBytes(stringstream *file, void *_ptr, size_t length) {
+  for (size_t i = 0; i < length; i++) {
+    file->read((char *)_ptr + length - 1 - i, 1);
+  }
+}
 
-        writeBytes(file, (const char*)&bezList[i]->Kp2.x, 4);
-        writeBytes(file, (const char*)&bezList[i]->Kp2.y, 4);
-        writeBytes(file, (const char*)&bezList[i]->Kp2.z, 4);
+void writeToExportFile(std::fstream *file, QList<bezier_t *> &bezList) {
+  for (int i = 0; i < bezList.size(); ++i) {
+    writeBytes(file, (const char *)&bezList[i]->Kp1.x, 4);
+    writeBytes(file, (const char *)&bezList[i]->Kp1.y, 4);
+    writeBytes(file, (const char *)&bezList[i]->Kp1.z, 4);
 
-        writeBytes(file, (const char*)&bezList[i]->P1.x, 4);
-        writeBytes(file, (const char*)&bezList[i]->P1.y, 4);
-        writeBytes(file, (const char*)&bezList[i]->P1.z, 4);
+    writeBytes(file, (const char *)&bezList[i]->Kp2.x, 4);
+    writeBytes(file, (const char *)&bezList[i]->Kp2.y, 4);
+    writeBytes(file, (const char *)&bezList[i]->Kp2.z, 4);
 
-        writeBytes(file, (const char*)&bezList[i]->roll, 4);
+    writeBytes(file, (const char *)&bezList[i]->P1.x, 4);
+    writeBytes(file, (const char *)&bezList[i]->P1.y, 4);
+    writeBytes(file, (const char *)&bezList[i]->P1.z, 4);
 
-        char cTemp = 0xFF;
-        writeBytes(file, &cTemp, 1); // CONT ROLL
-        cTemp = bezList[i]->relRoll ? 0xFF : 0x00;
-        writeBytes(file, &cTemp, 1); // REL ROLL
-        cTemp = 0x00;
-        writeBytes(file, &cTemp, 1); // equal dist CP
-        writeNulls(file, 7); // were 5
-    }
+    writeBytes(file, (const char *)&bezList[i]->roll, 4);
+
+    char cTemp = 0xFF;
+    writeBytes(file, &cTemp, 1); // CONT ROLL
+    cTemp = bezList[i]->relRoll ? 0xFF : 0x00;
+    writeBytes(file, &cTemp, 1); // REL ROLL
+    cTemp = 0x00;
+    writeBytes(file, &cTemp, 1); // equal dist CP
+    writeNulls(file, 7);         // were 5
+  }
+}
+
+void writeToExportFileAscii(std::fstream *file, QList<bezier_t *> &bezList) {
+  for (int i = 0; i < bezList.size(); ++i) {
+    writeFloats(file, bezList[i]->Kp1.x);
+    writeFloats(file, bezList[i]->Kp1.y);
+    writeFloats(file, bezList[i]->Kp1.z);
+
+    writeFloats(file, bezList[i]->Kp2.x);
+    writeFloats(file, bezList[i]->Kp2.y);
+    writeFloats(file, bezList[i]->Kp2.z);
+
+    writeFloats(file, bezList[i]->P1.x);
+    writeFloats(file, bezList[i]->P1.y);
+    writeFloats(file, bezList[i]->P1.z);
+
+    writeFloats(file, bezList[i]->roll);
+
+    *file << std::endl;
+  }
 }

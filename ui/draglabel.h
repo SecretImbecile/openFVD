@@ -21,28 +21,26 @@
 
 #include <QLabel>
 
-class dragLabel : public QLabel
-{
-    Q_OBJECT
+class dragLabel : public QLabel {
+  Q_OBJECT
 public:
-    explicit dragLabel(QWidget *parent = 0);
-    bool isDragged;
+  explicit dragLabel(QWidget *parent = 0);
+  bool isDragged;
 
 signals:
-    
+
 public slots:
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-
+  void mousePressEvent(QMouseEvent *event);
+  void mouseReleaseEvent(QMouseEvent *event);
+  void mouseMoveEvent(QMouseEvent *event);
 
 private:
-    int fromx;
-    int fromy;
-    int x;
-    int y;
+  int fromx;
+  int fromy;
+  int x;
+  int y;
 };
 
 #endif // DRAGLABEL_H

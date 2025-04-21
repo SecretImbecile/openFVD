@@ -20,67 +20,58 @@
 #include "track.h"
 #include <QTreeWidgetItem>
 
-sectionHandler::sectionHandler(track* _track, enum secType _type, int _id)
-{
-    type = _type;
-    id = _id;
-    QString name;
+sectionHandler::sectionHandler(track *_track, enum secType _type, int _id) {
+  type = _type;
+  id = _id;
+  QString name;
+  sectionData = NULL;
+  if (type == anchor) {
+    name = QString("");
     sectionData = NULL;
-    if(type == anchor)
-    {
-        name = QString("");
-        sectionData = NULL;
-    }
-    else
-    {
-        name = QString("unnamed");
-        _track->newSection(type, id-1);
-        sectionData = _track->lSections[id-1];
-        sectionData->sName = name;
-    }
+  } else {
+    name = QString("Unnamed");
+    _track->newSection(type, id - 1);
+    sectionData = _track->lSections[id - 1];
+    sectionData->sName = name;
+  }
 
-    listItem = new QTreeWidgetItem();
-    listItem->setText(1, name);
-    listItem->setText(0, QString().number(id));
-    listItem->setTextAlignment(0, Qt::AlignHCenter | Qt::AlignVCenter);
-    switch(_type)
-    {
-    case straight:
-        listItem->setText(2, QString("Straight"));
-        listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
-        break;
-    case curved:
-        listItem->setText(2, QString("Curved"));
-        listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
-        break;
-    case forced:
-        listItem->setText(2, QString("Force"));
-        listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
-        break;
-    case geometric:
-        listItem->setText(2, QString("Geometric"));
-        listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
-        break;
-    case bezier:
-        listItem->setText(2, QString("Bezier"));
-        listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
-        break;
-    case anchor:
-        listItem->setText(2, QString("Anchor"));
-        break;
-    case nolimitscsv:
-        listItem->setText(2, QString("NoLimits CSV"));
-        break;
-    }
+  listItem = new QTreeWidgetItem();
+  listItem->setText(1, name);
+  listItem->setText(0, QString().number(id));
+  listItem->setTextAlignment(0, Qt::AlignHCenter | Qt::AlignVCenter);
+  switch (_type) {
+  case straight:
+    listItem->setText(2, QString("Straight"));
+    listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
+    break;
+  case curved:
+    listItem->setText(2, QString("Curved"));
+    listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
+    break;
+  case forced:
+    listItem->setText(2, QString("Force"));
+    listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
+    break;
+  case geometric:
+    listItem->setText(2, QString("Geometric"));
+    listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
+    break;
+  case bezier:
+    listItem->setText(2, QString("Bezier"));
+    listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
+    break;
+  case anchor:
+    listItem->setText(2, QString("Anchor"));
+    break;
+  case nolimitscsv:
+    listItem->setText(2, QString("NoLimits CSV"));
+    break;
+  }
 }
 
-sectionHandler::~sectionHandler()
-{
-    delete listItem;
-}
+sectionHandler::~sectionHandler() { delete listItem; }
 
-void sectionHandler::updateID(int _id)
-{
-    id = _id;
-    listItem->setText(0, QString().number(id));
+void sectionHandler::updateID(int _id) {
+  id = _id;
+  listItem->setText(0, QString().number(id));
 }

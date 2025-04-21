@@ -24,19 +24,18 @@
 class track;
 class QTreeWidgetItem;
 
-class sectionHandler
-{
+class sectionHandler {
 public:
-    sectionHandler(track* _track, enum secType _type, int _id);
-    ~sectionHandler();
-    void updateID(int _id);
+  sectionHandler(track *_track, enum secType _type, int _id);
+  ~sectionHandler();
+  void updateID(int _id);
 
-    enum secType type;
-    QTreeWidgetItem* listItem;
-    section* sectionData;
+  enum secType type;
+  QTreeWidgetItem *listItem;
+  section *sectionData;
 
 private:
-    int id;
+  int id;
 };
 
 #endif // SECTIONHANDLER_H

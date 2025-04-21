@@ -26,17 +26,16 @@
 class projectWidget;
 class QMainWindow;
 
-class saver
-{
+class saver {
 public:
-    saver(const QString& fileName, projectWidget* _project, QMainWindow *_parent);
-    QString doSave();
-    QString doLoad();
+  saver(const QString &fileName, projectWidget *_project, QMainWindow *_parent);
+  QString doSave();
+  QString doLoad();
 
-    track* saveTo;
-    projectWidget* project;
-    QString sFileName;
-    QMainWindow *parent;
+  track *saveTo;
+  projectWidget *project;
+  QString sFileName;
+  QMainWindow *parent;
 };
 
 #endif // SAVER_H

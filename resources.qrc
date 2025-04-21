@@ -24,6 +24,8 @@
         <file>shaders/simpleSM.vert</file>
         <file>shaders/sky.frag</file>
         <file>shaders/sky.vert</file>
+        <file>shaders/stl.frag</file>
+        <file>shaders/stl.vert</file>
         <file>shaders/track.frag</file>
         <file>shaders/track.vert</file>
     </qresource>

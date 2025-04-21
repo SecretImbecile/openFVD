@@ -1,3 +1,6 @@
+#ifndef COMMON_H
+#define COMMON_H
+
 /*
 #    FVD++, an advanced coaster design tool for NoLimits
 #    Copyright (C) 2012-2015, Stephan "Lenny" Alt <alt.stephan@web.de>
@@ -16,23 +19,12 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#import <Cocoa/Cocoa.h>
-#import "MainDelagate.h"
+#include <QApplication>
+#include <QDir>
+#include <QString>
 
-extern "C" {
-    void initApplication();
+namespace common {
+QString getResource(const char *file, bool fullpath = false);
 }
 
-int OwnNSApplicationMain(int argc, const char *argv[]) {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    NSApplication * application = [NSApplication sharedApplication];
-
-    MainDelegate *appDelegate = [[[MainDelegate alloc] init] autorelease];
-
-    [application setDelegate:appDelegate];
-    initApplication();
-
-    [pool drain];
-
-    return EXIT_SUCCESS;
-}
+#endif // COMMON_H

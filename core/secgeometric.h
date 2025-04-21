@@ -19,24 +19,23 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "track.h"
 #include "section.h"
+#include "track.h"
 
-class secgeometric : public section
-{
+class secgeometric : public section {
 public:
-    ~secgeometric();
-    secgeometric(track* getParent, mnode* first, float getlength = 10.0);
-    virtual int updateSection(int node = 0);
-    int updateDistanceSection(int node = 0);
-    virtual void saveSection(std::fstream& file);
-    virtual void loadSection(std::fstream& file);
-    virtual void legacyLoadSection(std::fstream& file);
-    virtual void saveSection(std::stringstream& file);
-    virtual void loadSection(std::stringstream& file);
-    virtual float getMaxArgument();
-    virtual bool isLockable(func* _func);
-    virtual bool isInFunction(int index, subfunc* func);
+  ~secgeometric();
+  secgeometric(track *getParent, mnode *first, float getlength = 10.0);
+  virtual int updateSection(int node = 0);
+  int updateDistanceSection(int node = 0);
+  virtual void saveSection(std::fstream &file);
+  virtual void loadSection(std::fstream &file);
+  virtual void legacyLoadSection(std::fstream &file);
+  virtual void saveSection(std::stringstream &file);
+  virtual void loadSection(std::stringstream &file);
+  virtual float getMaxArgument();
+  virtual bool isLockable(func *_func);
+  virtual bool isInFunction(int index, subfunc *func);
 };
 
 #endif // SECGEOMETRIC_H

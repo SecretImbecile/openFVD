@@ -19,10 +19,10 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "function.h"
+#include "mnode.h"
 #include <QList>
 #include <QString>
-#include "mnode.h"
-#include "function.h"
 #include <sstream>
 
 #define EULER true
@@ -33,71 +33,72 @@
 
 class track;
 
-enum secType
-{
-    anchor,
-    straight,
-    curved,
-    forced,
-    geometric,
-    bezier,
-    nolimitscsv
+enum secType {
+  anchor,
+  straight,
+  curved,
+  forced,
+  geometric,
+  bezier,
+  nolimitscsv
 };
 
-class section
-{
+class section {
 public:
-    section(track* getParent, enum secType _type, mnode* first);
-    virtual ~section();
-    float length;
-    virtual int updateSection(int node = 0) = 0;
-    virtual int exportSection(std::fstream *file, mnode* anchor, float mPerNode, float fHeart, glm::vec3& vHeartLat, glm::vec3& Norm, float fRollThresh);
-    virtual void fillPointList(QList<glm::vec4> &List, QList<glm::vec3> &Normals, mnode* anchor, float mPerNode, float fHeart);
-    virtual void iFillPointList(QList<int> &List, float mPerNode);
-    void         Split(QList<int> &List, int l, int r, float total, float min);
-    virtual void fFillPointList(QList<int> &List, float mPerNode);
-    virtual void saveSection(std::fstream& file) = 0;
-    virtual void loadSection(std::fstream& file) = 0;
-    virtual void legacyLoadSection(std::fstream& file) = 0;
-    virtual void saveSection(std::stringstream& file) = 0;
-    virtual void loadSection(std::stringstream& file) = 0;
-    virtual float getMaxArgument() = 0;
-    virtual bool isLockable(func* _func) = 0;
-    virtual bool isInFunction(int index, subfunc* func) = 0;
-    float getSpeed();
-    bool setLocked(eFunctype func, int _id, bool _active);
-    void calcDirFromLast(int i);
-	QVector<mnode> lNodes;
-    track* parent;
-    func* rollFunc;
+  section(track *getParent, enum secType _type, mnode *first);
+  virtual ~section();
+  float length;
+  virtual int updateSection(int node = 0) = 0;
+  virtual int exportSection(std::fstream *file, mnode *anchor, float mPerNode,
+                            float fHeart, glm::vec3 &vHeartLat, glm::vec3 &Norm,
+                            float fRollThresh);
+  virtual void fillPointList(QList<glm::vec4> &List, QList<glm::vec3> &Normals,
+                             mnode *anchor, float mPerNode, float fHeart);
+  virtual void iFillPointList(QList<int> &List, float mPerNode);
+  void Split(QList<int> &List, int l, int r, float total, float min);
+  virtual void fFillPointList(QList<int> &List, float mPerNode);
+  virtual void saveSection(std::fstream &file) = 0;
+  virtual void loadSection(std::fstream &file) = 0;
+  virtual void legacyLoadSection(std::fstream &file) = 0;
+  virtual void saveSection(std::stringstream &file) = 0;
+  virtual void loadSection(std::stringstream &file) = 0;
+  virtual float getMaxArgument() = 0;
+  virtual bool isLockable(func *_func) = 0;
+  virtual bool isInFunction(int index, subfunc *func) = 0;
+  float getSpeed();
+  bool setLocked(eFunctype func, int _id, bool _active);
+  void calcDirFromLast(int i);
+  QList<mnode> lNodes;
+  track *parent;
+  func *rollFunc;
 
-    enum secType type;
+  enum secType type;
 
-    bool bSpeed;
-    float fVel;
+  bool bSpeed;
+  float fVel;
 
-    bool bOrientation;
-    bool bArgument;
+  bool bOrientation;
+  bool bArgument;
 
-    // Straight Section Parameters
-    float fHLength;
+  // Straight Section Parameters
+  float fHLength;
 
-    // Curved Section Parameters
-    float fAngle;
-    float fRadius;
-    float fDirection;
-    float fLeadIn;
-    float fLeadOut;
+  // Curved Section Parameters
+  float fAngle;
+  float fRadius;
+  float fDirection;
+  float fLeadIn;
+  float fLeadOut;
 
-    // Forced/Geometric Section Parameters
-    int iTime;
-    func* normForce;
-    func* latForce;
-    QString sName;
+  // Forced/Geometric Section Parameters
+  int iTime;
+  func *normForce;
+  func *latForce;
+  QString sName;
 
-    // Bezier Section Parameters
-    QList<bezier_t*> bezList;
-    QList<glm::vec3> supList;
+  // Bezier Section Parameters
+  QList<bezier_t *> bezList;
+  QList<glm::vec3> supList;
 };
 
 #endif // SECTION_H

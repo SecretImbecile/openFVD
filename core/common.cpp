@@ -16,22 +16,19 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#import "MainDelagate.h"
+#include "common.h"
 
-@implementation MainDelegate : NSObject
-- (id)init {
-    if (self = [super init]) {
-    }
-    return self;
+#include <QDebug>
+
+namespace common {
+QString getResource(const char *file, bool fullpath) {
+  QString appPath;
+  appPath = QDir(QApplication::applicationDirPath()).absolutePath();
+  appPath.append("/").append(file);
+  if (!fullpath) {
+    qDebug() << "current: " << QDir::currentPath() << "full: " << appPath;
+    appPath.replace(QDir::currentPath() + "/", "");
+  }
+  return appPath;
 }
-
-- (void)applicationWillFinishLaunching:(NSNotification *)notification {
-    [window makeKeyAndOrderFront:self];
-}
-
-- (void)dealloc {
-    [window release];
-    [super dealloc];
-}
-
-@end
+} // namespace common

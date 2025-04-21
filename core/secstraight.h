@@ -22,20 +22,19 @@
 #include "section.h"
 #include "track.h"
 
-class secstraight : public section
-{
+class secstraight : public section {
 public:
-    secstraight(track* getParent, mnode* first, float getlength = 10.0);
-    void changelength(float newlength);
-    virtual int updateSection(int node = 0);
-    virtual void saveSection(std::fstream& file);
-    virtual void loadSection(std::fstream& file);
-    virtual void legacyLoadSection(std::fstream& file);
-    virtual void saveSection(std::stringstream& file);
-    virtual void loadSection(std::stringstream& file);
-    virtual float getMaxArgument();
-    virtual bool isLockable(func* _func);
-    virtual bool isInFunction(int index, subfunc* func);
+  secstraight(track *getParent, mnode *first, float getlength = 10.0);
+  void changelength(float newlength);
+  virtual int updateSection(int node = 0);
+  virtual void saveSection(std::fstream &file);
+  virtual void loadSection(std::fstream &file);
+  virtual void legacyLoadSection(std::fstream &file);
+  virtual void saveSection(std::stringstream &file);
+  virtual void loadSection(std::stringstream &file);
+  virtual float getMaxArgument();
+  virtual bool isLockable(func *_func);
+  virtual bool isInFunction(int index, subfunc *func);
 };
 
 #endif // SECSTRAIGHT_H

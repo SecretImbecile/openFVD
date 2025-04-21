@@ -21,26 +21,26 @@
 
 #include "glviewwidget.h"
 
-class myShader
-{
+class myShader {
 public:
-    myShader(const char* _vertex, const char* _fragment);
-    ~myShader();
-    void useAttribute(GLuint _index, const GLchar* _name);
-    void setOutput(GLuint _index, const GLchar* _name);
+  myShader(const char *_vertex, const char *_fragment);
+  ~myShader();
+  void useAttribute(GLuint _index, const GLchar *_name);
+  void setOutput(GLuint _index, const GLchar *_name);
 
-    void useUniform(const GLchar* _name, glm::mat4* _mat4);
-    void useUniform(const GLchar* _name, glm::vec4* _vec4);
-    void useUniform(const GLchar* _name, glm::vec3* _vec3);
-    void useUniform(const GLchar* _name, float f1, float f2, float f3);
-    void useUniform(const GLchar* _name, GLuint _int);
-    void useUniform(const GLchar* _name, float _float);
+  void useUniform(const GLchar *_name, glm::mat4 *_mat4);
+  void useUniform(const GLchar *_name, glm::vec4 *_vec4);
+  void useUniform(const GLchar *_name, glm::vec3 *_vec3);
+  void useUniform(const GLchar *_name, float f1, float f2, float f3);
+  void useUniform(const GLchar *_name, GLuint _int);
+  void useUniform(const GLchar *_name, float _float);
 
-    void linkProgram();
-    void bind();
+  void linkProgram();
+  void bind();
+
 private:
-    GLuint sources[2];
-    GLuint program;
+  GLuint sources[2];
+  GLuint program;
 };
 
 #endif // MYSHADER_H

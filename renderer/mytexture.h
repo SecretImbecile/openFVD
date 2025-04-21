@@ -21,25 +21,26 @@
 
 #include "glviewwidget.h"
 
-class myTexture
-{
+class myTexture {
 public:
-    myTexture(QImage& _image, int mode = 0);
-    myTexture(const char* _image, int mode = 0);
-    myTexture(const char *_negx, const char *_negy, const char *_negz, const char *_posx, const char *_posy, const char *_posz);
-    myTexture(int _width, int _height, GLuint _format, GLuint _intFormat);
-    ~myTexture();
-    GLuint getId();
-    GLuint getHandle();
-    void resize(int _width, int _height, GLuint _format, GLuint _intFormat);
-    void changeTexture(QImage& _image);
-    static void initialize();
+  myTexture(QImage &_image, int mode = 0);
+  myTexture(const char *_image, int mode = 0);
+  myTexture(const char *_negx, const char *_negy, const char *_negz,
+            const char *_posx, const char *_posy, const char *_posz);
+  myTexture(int _width, int _height, GLuint _format, GLuint _intFormat);
+  ~myTexture();
+  GLuint getId();
+  GLuint getHandle();
+  void resize(int _width, int _height, GLuint _format, GLuint _intFormat);
+  void changeTexture(QImage &_image);
+  static void initialize();
+
 private:
-    int getFreeID();
-    int iType;
-    GLuint handle;
-    int mId;
-    static QList<bool> usedIDs;
+  int getFreeID();
+  int iType;
+  GLuint handle;
+  int mId;
+  static QList<bool> usedIDs;
 };
 
 #endif // MYTEXTURE_H

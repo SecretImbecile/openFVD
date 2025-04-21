@@ -21,51 +21,51 @@
 
 #include <QDialog>
 
-#include "track.h"
 #include "projectwidget.h"
+#include "track.h"
 #include <QString>
 
 namespace Ui {
 class Exportui;
 }
 
-class exportUi : public QDialog
-{
-    Q_OBJECT
-    
+class exportUi : public QDialog {
+  Q_OBJECT
+
 public:
-    explicit exportUi(QWidget *parent = 0);
-    exportUi(QWidget *parent, projectWidget* _project);
-    ~exportUi();
-    void doExport();
-    void doExport2();
-    void doNL2Export();
-    void doFastExport();
-    bool updateBoxes();
+  explicit exportUi(QWidget *parent = 0);
+  exportUi(QWidget *parent, projectWidget *_project);
+  ~exportUi();
+  void doExport();
+  void doExport2();
+  void doNL2Export();
+  void doNL2ExportCSV();
+  void doFastExport();
+  bool updateBoxes();
 
 private slots:
-    void on_buttonBox_accepted();
+  void on_buttonBox_accepted();
 
-    void on_buttonBox_rejected();
+  void on_buttonBox_rejected();
 
-    void on_exportFromBox_currentIndexChanged(int index);
+  void on_exportFromBox_currentIndexChanged(int index);
 
-    void on_exportToBox_currentIndexChanged(int index);
+  void on_exportToBox_currentIndexChanged(int index);
 
-    void on_exportTrackBox_currentIndexChanged(int index);
+  void on_exportTrackBox_currentIndexChanged(int index);
 
-    void on_exportTypeBox_currentIndexChanged(int index);
+  void on_exportTypeBox_currentIndexChanged(int index);
 
 private:
-    Ui::Exportui *ui;
-    const char* cFile;
-    projectWidget* project;
-    float fPerNode;
-    bool phantomChanges;
-    int curTrackIndex;
-    int curFromIndex;
-    int curToIndex;
-    QString fileName;
+  Ui::Exportui *ui;
+  const char *cFile;
+  projectWidget *project;
+  float fPerNode;
+  bool phantomChanges;
+  int curTrackIndex;
+  int curFromIndex;
+  int curToIndex;
+  QString fileName;
 };
 
 #endif // EXPORTUI_H

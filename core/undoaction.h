@@ -28,72 +28,70 @@ class MainWindow;
 class trackHandler;
 class track;
 
-enum eActionType
-{
-    onLengthSpin,
-    onChangeSpin,
-    onArg1,
-    onCenterSpin,
-    onTensionSpin,
-    onTransitionBox,
-    appendSubFunction,
-    removeSubFunction,
-    changeSegmentLength,
-    changeCurveDirection,
-    changeCurveLeadIn,
-    changeCurveLeadOut,
-    changeCurveRadius,
-    changeSpeedState,
-    changeSegmentSpeed,
-    changeAnchorPosX,
-    changeAnchorPosY,
-    changeAnchorPosZ,
-    changeAnchorRoll,
-    changeAnchorPitch,
-    changeAnchorYaw,
-    changeAnchorNormal,
-    changeAnchorLateral,
-    changeAnchorPitchChange,
-    changeAnchorYawChange,
-    changeAnchorSpeed,
-    changeTrackHeartline,
-    changeTrackFriction,
-    changeTrackResistance,
-    appendSegment,
-    removeSegment,
-    changeSegmentArgument, //<-----
-    changeSegmentOrientation,
-    changeFunctionStatus,
+enum eActionType {
+  onLengthSpin,
+  onChangeSpin,
+  onArg1,
+  onCenterSpin,
+  onTensionSpin,
+  onTransitionBox,
+  appendSubFunction,
+  removeSubFunction,
+  changeSegmentLength,
+  changeCurveDirection,
+  changeCurveLeadIn,
+  changeCurveLeadOut,
+  changeCurveRadius,
+  changeSpeedState,
+  changeSegmentSpeed,
+  changeAnchorPosX,
+  changeAnchorPosY,
+  changeAnchorPosZ,
+  changeAnchorRoll,
+  changeAnchorPitch,
+  changeAnchorYaw,
+  changeAnchorNormal,
+  changeAnchorLateral,
+  changeAnchorPitchChange,
+  changeAnchorYawChange,
+  changeAnchorSpeed,
+  changeTrackHeartline,
+  changeTrackFriction,
+  changeTrackResistance,
+  appendSegment,
+  removeSegment,
+  changeSegmentArgument, //<-----
+  changeSegmentOrientation,
+  changeFunctionStatus,
 
-    newTrack,
-    deleteTrack
+  newTrack,
+  deleteTrack
 };
 
-class undoAction
-{
+class undoAction {
 public:
-    undoAction();
-    undoAction(trackHandler* _track, eActionType _type);
-    ~undoAction();
+  undoAction();
+  undoAction(trackHandler *_track, eActionType _type);
+  ~undoAction();
 
-    void doUndo();
-    void doRedo();
+  void doUndo();
+  void doRedo();
 
-    trackHandler* hTrack;
+  trackHandler *hTrack;
 
-    eActionType type;
+  eActionType type;
 
-    QVariant fromValue;
-    QVariant toValue;
+  QVariant fromValue;
+  QVariant toValue;
 
-    std::stringstream* info;
+  std::stringstream *info;
 
-    undoAction* nextAction;
+  undoAction *nextAction;
 
-    track* inTrack;
-    int sectionNumber;
-    eFunctype inFunction;
-    int subfuncNumber;
+  track *inTrack;
+  int sectionNumber;
+  eFunctype inFunction;
+  int subfuncNumber;
 };
 
 #endif // UNDOACTION_H

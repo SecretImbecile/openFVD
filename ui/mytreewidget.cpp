@@ -18,12 +18,6 @@
 
 #include "mytreewidget.h"
 
-myTreeWidget::myTreeWidget(QWidget *parent) :
-    QTreeWidget(parent)
-{
-}
+myTreeWidget::myTreeWidget(QWidget *parent) : QTreeWidget(parent) {}
 
-QSize myTreeWidget::sizeHint() const
-{
-    return QSize(256, 80);
-}
+QSize myTreeWidget::sizeHint() const { return QSize(256, 80); }

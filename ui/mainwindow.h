@@ -19,19 +19,18 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QMainWindow>
 #include "glviewwidget.h"
-#include "trackhandler.h"
 #include "sectionhandler.h"
+#include "trackhandler.h"
+#include <QMainWindow>
 
 #include <QtGlobal>
 
-#include "track.h"
 #include "saver.h"
+#include "track.h"
 
-#include <fstream>
 #include <QStyledItemDelegate>
-
+#include <fstream>
 
 // some defines
 
@@ -62,143 +61,131 @@
 #define TREE_FLEXFUNC QString("Pitch Change")
 #define TREE_DIRFUNC QString("Yaw Change")
 
-
 class exportUi;
 class undoHandler;
 class optionsMenu;
 class conversionPanel;
 class graphWidget;
 class trackHandler;
-class objectExporter;
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
-    
+class MainWindow : public QMainWindow {
+  Q_OBJECT
+
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+  explicit MainWindow(QWidget *parent = 0);
+  ~MainWindow();
 
-    void backupSave();
-    void setUndoButtons();
-    void updateBoxes();
-    void displayStatusMessage(QString message);
-    QString getGLVersionString();
-    QString getCurrentFileName();
-    int getPovPos();
-    track* curTrack();
-    QList<trackHandler*> getTrackList();
-    void updateInfoPanel();
-    void updateInfoPanel(mnode* lastnode);
-    void openTab(trackHandler* _track);
-    void renameTab(trackHandler* _track);
-    void sectionChanged();
-    void initProject();
-    void hideAll();
-    void showAll();
-    void addProject(QString fileName);
-    void loadProject(QString fileName);
+  void backupSave();
+  void setUndoButtons();
+  void updateBoxes();
+  void displayStatusMessage(QString message);
+  QString getGLVersionString();
+  QString getCurrentFileName();
+  int getPovPos();
+  track *curTrack();
+  QList<trackHandler *> getTrackList();
+  void updateInfoPanel();
+  void updateInfoPanel(mnode *lastnode);
+  void openTab(trackHandler *_track);
+  void renameTab(trackHandler *_track);
+  void sectionChanged();
+  void initProject();
+  void hideAll();
+  void showAll();
+  void addProject(QString fileName);
+  void loadProject(QString fileName);
 
-    void updateProjectWidget();
+  void updateProjectWidget();
 
-    void keyPressed(QEvent *event);
-    void keyReleased(QEvent *event);
+  void keyPressed(QEvent *event);
+  void keyReleased(QEvent *event);
 
+  subfunc *selectedFunc;
+  QTreeWidgetItem *selectedSection;
+  optionsMenu *mOptions;
+  graphWidget *mGraphWidget;
 
-    subfunc* selectedFunc;
-    QTreeWidgetItem* selectedSection;
-    optionsMenu* mOptions;
-    graphWidget* mGraphWidget;
+  projectWidget *project;
 
-    projectWidget* project;
-
-    bool undoChanges;
+  bool undoChanges;
 
 signals:
-    void emitMessage(QString msg, int msec = 5000);
+  void emitMessage(QString msg, int msec = 5000);
 
 public slots:
-    void showCurInfoPanel();
+  void showCurInfoPanel();
 
-    void on_actionNew_triggered();
+  void on_actionNew_triggered();
 
-#ifdef Q_OS_MAC
-    void on_actionLoad_triggered(QString fileName = "");
-#endif
-#ifndef Q_OS_MAC
-    void on_actionLoad_triggered();
-#endif
+  void on_actionLoad_triggered();
 
-    void on_actionSave_triggered();
+  void on_actionSave_triggered();
 
-    void on_actionSave_As_triggered();
+  void on_actionSave_As_triggered();
 
-    void on_actionQuit_triggered();
+  void on_actionQuit_triggered();
 
-    void closeEvent(QCloseEvent *event);
+  void closeEvent(QCloseEvent *event);
 
-    void on_actionUseShader0_triggered();
+  void on_actionUseShader0_triggered();
 
-    void on_actionUseShader1_triggered();
+  void on_actionUseShader1_triggered();
 
-    void on_actionUseShader2_triggered();
+  void on_actionUseShader2_triggered();
 
-    void on_actionUseShader3_triggered();
+  void on_actionUseShader3_triggered();
 
-    void on_actionUseShader4_triggered();
+  void on_actionUseShader4_triggered();
 
-    void on_actionUseShader5_triggered();
+  void on_actionUseShader5_triggered();
 
-    void on_actionUndo_triggered();
+  void on_actionUndo_triggered();
 
-    void on_actionRedo_triggered();
+  void on_actionRedo_triggered();
 
-    void on_actionExportAs_triggered();
+  void on_actionExportAs_triggered();
 
-    void on_actionOptions_triggered();
+  void on_actionOptions_triggered();
 
-    void on_actionConversion_Panel_triggered();
+  void on_actionConversion_Panel_triggered();
 
-    void on_tabChooser_currentChanged(int index);
+  void on_tabChooser_currentChanged(int index);
 
-    void on_tabChooser_tabCloseRequested(int index);
+  void on_tabChooser_tabCloseRequested(int index);
 
-    void doAutoSave();
+  void doAutoSave();
 
-    void showMessage(QString msg, int msec = 5000);
+  void showMessage(QString msg, int msec = 5000);
 
 private slots:
-    void on_actionExport_Model_As_triggered();
-
-    void on_actionExport_triggered();
+  void on_actionExport_triggered();
 
 private:
-    Ui::MainWindow *ui;
-    void useShader(int shader);
-    bool areYouSure();
+  Ui::MainWindow *ui;
+  void useShader(int shader);
+  bool areYouSure();
 
-    bool phantomChanges;
-    QString     currentFileName;
-    exportUi* exportScreen;
-    conversionPanel* mConversion;
-    objectExporter* mObjectExporter;
+  bool phantomChanges;
+  QString currentFileName;
+  exportUi *exportScreen;
+  conversionPanel *mConversion;
 };
 
-
-class NoEditDelegate : public QStyledItemDelegate
-{
-    public:
-      NoEditDelegate(QObject* parent=0): QStyledItemDelegate(parent) {}
-      virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex &index) const {
-        Q_UNUSED(parent);
-        Q_UNUSED(option);
-        Q_UNUSED(index);
-        return 0;
-      }
-    };
+class NoEditDelegate : public QStyledItemDelegate {
+public:
+  NoEditDelegate(QObject *parent = 0) : QStyledItemDelegate(parent) {}
+  virtual QWidget *createEditor(QWidget *parent,
+                                const QStyleOptionViewItem &option,
+                                const QModelIndex &index) const {
+    Q_UNUSED(parent);
+    Q_UNUSED(option);
+    Q_UNUSED(index);
+    return 0;
+  }
+};
 
 #endif // MAINWINDOW_H

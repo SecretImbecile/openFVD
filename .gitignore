@@ -1,38 +1,33 @@
-# Compiled Object files
+# compiled object files
 *.slo
 *.lo
 *.o
 *.obj
 
-# Precompiled Headers
+# precompiled headers
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
+# compiled dynamic libraries
 *.so
 *.dylib
-*.dll
 
-# Fortran module files
+# fortran module files
 *.mod
 
-# Compiled Static libraries
+# compiled static libraries
 *.lai
 *.la
 *.a
 *.lib
 
-# Executables
-*.exe
+# executables
 *.out
 *.app
 
-# OSX Crap
-*.DS_Store
-.DS_Store
-
-# QT Crap
+# qt crap
 *.pro.user
 *.user
-
-# Binary Files
+/build
+/.qtcreator
+/release

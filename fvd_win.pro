@@ -24,15 +24,16 @@
 # QT (tested with 5.14.2)
 # glew
 # glm (tested with 0.9.5.1-1)
-# lib3ds
 
 CONFIG += qt
 QT     += core gui widgets printsupport opengl
 
+QMAKE_CXXFLAGS += -Wno-expansion-to-defined
+
 #CONFIG += exceptions \
 #          rtti
 
-CONFIG += debug
+#CONFIG += debug
 
 TARGET = FVD_0.8a
 TEMPLATE = app
@@ -141,26 +142,14 @@ INCLUDEPATH += "./ui/"
 INCLUDEPATH += "./renderer/"
 INCLUDEPATH += "./core/"
 
-INCLUDEPATH += "[glew include]"
-INCLUDEPATH += "[glm include]"
-INCLUDEPATH += "[lib3ds include]"
-INCLUDEPATH += "[libbacktrace include]"
+INCLUDEPATH += "path\to\fvd_deps\glew-1.12.0\include"
+INCLUDEPATH += "path\to\fvd_deps\glm"
 
 # GL and GLU, OS install
-LIBS += -lGL
-LIBS += -lGLU
+LIBS += -lOpenGL32
+LIBS += -lGLU32
 
-# GLEW, compiled from source
-LIBS += "[Path to libGLEW.so]"
-
-# lib3ds, compiled from source
-LIBS += "[Path to lib3ds.so]"
-
-# libbacktrace, compiled from source
-LIBS += "[Path to libbacktrace.a]"
-
-LIBS += -lX11
-LIBS += -L /usr/local/lib/
+LIBS += "path\to\fvd_deps\glew-1.12.0\lib\Release\x64\glew32.lib"
 
 RC_FILE = winicon.rc
 

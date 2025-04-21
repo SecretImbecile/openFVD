@@ -11,13 +11,22 @@
    </rect>
   </property>
   <property name="focusPolicy">
-   <enum>Qt::StrongFocus</enum>
+   <enum>Qt::FocusPolicy::StrongFocus</enum>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -47,10 +56,10 @@
       </size>
      </property>
      <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
+      <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
      </property>
      <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
@@ -86,7 +95,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -100,26 +109,32 @@
       <widget class="QPushButton" name="addButton">
        <property name="minimumSize">
         <size>
-         <width>80</width>
-         <height>0</height>
+         <width>75</width>
+         <height>21</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>75</width>
          <height>21</height>
         </size>
        </property>
        <property name="text">
-        <string>Add...</string>
+        <string>Add</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="deleteButton">
+       <property name="minimumSize">
+        <size>
+         <width>75</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>75</width>
          <height>21</height>
         </size>
        </property>
@@ -131,7 +146,7 @@
      <item>
       <spacer name="horizontalSpacer_5">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -143,9 +158,15 @@
      </item>
      <item>
       <widget class="QPushButton" name="smoothButton">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>21</height>
         </size>
        </property>
@@ -166,7 +187,7 @@
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -196,27 +217,27 @@
       </size>
      </property>
      <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+      <enum>QFrame::Shape::NoFrame</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Shadow::Sunken</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
      <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
      </property>
      <widget class="QWidget" name="scrollAreaWidgetContents">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>304</width>
-        <height>559</height>
+        <width>319</width>
+        <height>629</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -226,7 +247,16 @@
        </sizepolicy>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
         <number>2</number>
        </property>
        <item>
@@ -238,19 +268,28 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::Shape::Panel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Shadow::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
            <number>4</number>
           </property>
           <item row="0" column="0">
            <widget class="QLabel" name="timeInfo">
             <property name="text">
-             <string>section time:</string>
+             <string>Section time:</string>
             </property>
            </widget>
           </item>
@@ -264,7 +303,7 @@
           <item row="1" column="0">
            <widget class="QLabel" name="lengthInfo">
             <property name="text">
-             <string>section length:</string>
+             <string>Section length:</string>
             </property>
            </widget>
           </item>
@@ -293,13 +332,22 @@
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::Shape::Panel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Shadow::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
            <number>4</number>
           </property>
           <item row="0" column="0">
@@ -323,7 +371,7 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <item>
              <property name="text">
@@ -358,7 +406,7 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <item>
              <property name="text">
@@ -384,13 +432,22 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::Shape::Panel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Shadow::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
            <number>4</number>
           </property>
           <property name="spacing">
@@ -412,13 +469,13 @@
           <item row="1" column="4">
            <widget class="QLabel" name="zLabel">
             <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
+             <enum>Qt::LayoutDirection::LeftToRight</enum>
             </property>
             <property name="text">
              <string>Z</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -431,10 +488,10 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -453,7 +510,7 @@
              <string>Y</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -463,7 +520,7 @@
              <string>X</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -476,10 +533,10 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -501,10 +558,10 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -523,7 +580,7 @@
              <string>R</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -536,10 +593,10 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="suffix">
              <string>°</string>
@@ -564,17 +621,17 @@
              <string>P</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
           <item row="2" column="3">
            <widget class="myQDoubleSpinBox" name="pBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="suffix">
              <string>°</string>
@@ -593,13 +650,13 @@
           <item row="2" column="4">
            <widget class="QLabel" name="jLabel">
             <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
+             <enum>Qt::LayoutDirection::LeftToRight</enum>
             </property>
             <property name="text">
              <string>J</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -612,10 +669,10 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="suffix">
              <string>°</string>
@@ -661,10 +718,10 @@
                </size>
               </property>
               <property name="focusPolicy">
-               <enum>Qt::WheelFocus</enum>
+               <enum>Qt::FocusPolicy::WheelFocus</enum>
               </property>
               <property name="contextMenuPolicy">
-               <enum>Qt::NoContextMenu</enum>
+               <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
               </property>
               <property name="suffix">
                <string>g</string>
@@ -686,10 +743,10 @@
             <item row="0" column="2">
              <spacer name="horizontalSpacer_3">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
+               <enum>QSizePolicy::Policy::Fixed</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -702,13 +759,13 @@
             <item row="0" column="3">
              <widget class="QLabel" name="lateralLabel">
               <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
+               <enum>Qt::LayoutDirection::LeftToRight</enum>
               </property>
               <property name="text">
                <string>Lateral</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -721,10 +778,10 @@
                </size>
               </property>
               <property name="focusPolicy">
-               <enum>Qt::WheelFocus</enum>
+               <enum>Qt::FocusPolicy::WheelFocus</enum>
               </property>
               <property name="contextMenuPolicy">
-               <enum>Qt::NoContextMenu</enum>
+               <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
               </property>
               <property name="suffix">
                <string>g</string>
@@ -749,7 +806,7 @@
                <string>Normal</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -759,7 +816,7 @@
                <string>P/s</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -772,10 +829,10 @@
                </size>
               </property>
               <property name="focusPolicy">
-               <enum>Qt::WheelFocus</enum>
+               <enum>Qt::FocusPolicy::WheelFocus</enum>
               </property>
               <property name="contextMenuPolicy">
-               <enum>Qt::NoContextMenu</enum>
+               <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
               </property>
               <property name="suffix">
                <string>°/s</string>
@@ -794,10 +851,10 @@
             <item row="1" column="2">
              <spacer name="horizontalSpacer_4">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
+               <enum>QSizePolicy::Policy::Fixed</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -810,13 +867,13 @@
             <item row="1" column="3">
              <widget class="QLabel" name="yawChangeLabel">
               <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
+               <enum>Qt::LayoutDirection::LeftToRight</enum>
               </property>
               <property name="text">
                <string>J/s</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -829,10 +886,10 @@
                </size>
               </property>
               <property name="focusPolicy">
-               <enum>Qt::WheelFocus</enum>
+               <enum>Qt::FocusPolicy::WheelFocus</enum>
               </property>
               <property name="contextMenuPolicy">
-               <enum>Qt::NoContextMenu</enum>
+               <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
               </property>
               <property name="suffix">
                <string>°/s</string>
@@ -859,10 +916,10 @@
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -887,32 +944,41 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::Shape::Panel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Shadow::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
            <number>4</number>
           </property>
           <item row="0" column="0">
            <widget class="QCheckBox" name="curvedSpeedCheck">
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <property name="text">
-             <string>fixed speed</string>
+             <string>Fixed speed:</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="myQDoubleSpinBox" name="curvedSpeedBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -928,24 +994,24 @@
           <item row="1" column="0">
            <widget class="QLabel" name="curvedRadiusLabel">
             <property name="text">
-             <string>Track Radius:</string>
+             <string>Track radius:</string>
             </property>
            </widget>
           </item>
           <item row="4" column="0">
            <widget class="QLabel" name="curvedLeadInLabel">
             <property name="text">
-             <string>Lead In:</string>
+             <string>Lead in:</string>
             </property>
            </widget>
           </item>
           <item row="4" column="1">
            <widget class="myQDoubleSpinBox" name="curvedLeadInBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="suffix">
              <string>°</string>
@@ -961,17 +1027,17 @@
           <item row="5" column="0">
            <widget class="QLabel" name="curvedLeadOutLabel">
             <property name="text">
-             <string>Lead Out:</string>
+             <string>Lead out:</string>
             </property>
            </widget>
           </item>
           <item row="5" column="1">
            <widget class="myQDoubleSpinBox" name="curvedLeadOutBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="suffix">
              <string>°</string>
@@ -987,10 +1053,10 @@
           <item row="2" column="1">
            <widget class="myQDoubleSpinBox" name="curvedAngleBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="suffix">
              <string>°</string>
@@ -1009,10 +1075,10 @@
           <item row="1" column="1">
            <widget class="myQDoubleSpinBox" name="curvedRadiusBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -1028,7 +1094,7 @@
           <item row="2" column="0">
            <widget class="QLabel" name="curvedAngleLabel">
             <property name="text">
-             <string>Total Angle:</string>
+             <string>Total angle:</string>
             </property>
            </widget>
           </item>
@@ -1042,10 +1108,10 @@
           <item row="3" column="1">
            <widget class="myQDoubleSpinBox" name="curvedDirectionBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="suffix">
              <string>°</string>
@@ -1073,32 +1139,41 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::Shape::Panel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Shadow::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
            <number>4</number>
           </property>
           <item row="0" column="0">
            <widget class="QCheckBox" name="advancedSpeedCheck">
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <property name="text">
-             <string>fixed speed</string>
+             <string>Fixed speed:</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="myQDoubleSpinBox" name="advancedSpeedBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -1123,29 +1198,38 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::Shape::Panel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Shadow::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
            <number>4</number>
           </property>
           <item row="0" column="0">
            <widget class="QCheckBox" name="straightSpeedCheck">
             <property name="text">
-             <string>fixed speed</string>
+             <string>Fixed speed:</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="myQDoubleSpinBox" name="straightSpeedBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>
@@ -1161,17 +1245,17 @@
           <item row="1" column="0">
            <widget class="QLabel" name="sHLengthLabel">
             <property name="text">
-             <string>Length of Heartline:</string>
+             <string>Length of heartline:</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
            <widget class="myQDoubleSpinBox" name="straightLengthBox">
             <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
+             <enum>Qt::FocusPolicy::WheelFocus</enum>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="decimals">
              <number>3</number>

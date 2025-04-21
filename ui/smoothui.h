@@ -21,9 +21,9 @@
 
 #include <QDialog>
 
+#include "graphwidget.h"
 #include "track.h"
 #include "trackhandler.h"
-#include "graphwidget.h"
 
 class trackWidget;
 class smoothHandler;
@@ -32,54 +32,53 @@ namespace Ui {
 class smoothUi;
 }
 
-class smoothUi : public QDialog
-{
-    Q_OBJECT
-    
+class smoothUi : public QDialog {
+  Q_OBJECT
+
 public:
-    explicit smoothUi(trackHandler* _track, QWidget *parent = 0);
-    ~smoothUi();
+  explicit smoothUi(trackHandler *_track, QWidget *parent = 0);
+  ~smoothUi();
 
-    void applyRollSmooth(int fromNode = 0);
-    bool active();
+  void applyRollSmooth(int fromNode = 0);
+  bool active();
 
-    void updateUi();
+  void updateUi();
 
-    char customChar;
+  char customChar;
 
 public slots:
-    void on_buttonBox_accepted();
+  void on_buttonBox_accepted();
 
 private slots:
-    void on_smoothUnitTree_itemSelectionChanged();
+  void on_smoothUnitTree_itemSelectionChanged();
 
-    void on_lengthBox_valueChanged(double arg1);
+  void on_lengthBox_valueChanged(double arg1);
 
-    void on_iterBox_valueChanged(int arg1);
+  void on_iterBox_valueChanged(int arg1);
 
-    void on_fromBox_valueChanged(double arg1);
+  void on_fromBox_valueChanged(double arg1);
 
-    void on_toBox_valueChanged(double arg1);
+  void on_toBox_valueChanged(double arg1);
 
-    void on_smoothUnitTree_itemChanged(QTreeWidgetItem *item, int column);
+  void on_smoothUnitTree_itemChanged(QTreeWidgetItem *item, int column);
 
-    void on_newButton_released();
+  void on_newButton_released();
 
-    void on_removeButton_released();
+  void on_removeButton_released();
 
 private:
-    void applyRollSmoothFilter(smoothHandler* _handler);
+  void applyRollSmoothFilter(smoothHandler *_handler);
 
-    void generateWarnings();
+  void generateWarnings();
 
-    Ui::smoothUi *ui;
+  Ui::smoothUi *ui;
 
-    track* m_track;
-    graphWidget* m_widget;
-    trackWidget* m_trackwidget;
+  track *m_track;
+  graphWidget *m_widget;
+  trackWidget *m_trackwidget;
 
-    bool phantomChanges;
-    smoothHandler* curHandler;
+  bool phantomChanges;
+  smoothHandler *curHandler;
 };
 
 #endif // SMOOTHUI_H

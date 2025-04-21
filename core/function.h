@@ -19,63 +19,59 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "subfunction.h"
 #include <QList>
 #include <QVector>
-#include "subfunction.h"
 #include <fstream>
 
-enum eFunctype
-{
-    funcRoll,
-    funcNormal,
-    funcLateral,
-    funcPitch,
-    funcYaw
-};
+enum eFunctype { funcRoll, funcNormal, funcLateral, funcPitch, funcYaw };
 
 class section;
 
-class func
-{
+class func {
 public:
-    func(float min, float max, float start, float end, section* _parent, enum eFunctype newtype);
-    ~func();
-    void appendSubFunction(float length, int i = -1);
-    void removeSubFunction(int i = -1);
+  func(float min, float max, float start, float end, section *_parent,
+       enum eFunctype newtype);
+  ~func();
+  void appendSubFunction(float length, int i = -1);
+  void removeSubFunction(int i = -1);
 
-    float getValue(float x);
+  float getValue(float x);
 
-    void setMaxArgument(float newMax);
-    float getMaxArgument() const { return funcList[funcList.size()-1]->maxArgument; }
+  void setMaxArgument(float newMax);
+  float getMaxArgument() const {
+    return funcList[funcList.size() - 1]->maxArgument;
+  }
 
-    float getMaxValue();
-    float getMinValue();
+  float getMaxValue();
+  float getMinValue();
 
-    void translateValues(subfunc* caller);
+  void translateValues(subfunc *caller);
 
-    float changeLength(float newlength, int index);
+  float changeLength(float newlength, int index);
 
-    int getSubfuncNumber(subfunc* _sub);
+  int getSubfuncNumber(subfunc *_sub);
 
-    void saveFunction(std::fstream& file);
-    void loadFunction(std::fstream& file);
-    void legacyLoadFunction(std::fstream& file);
-    void saveFunction(std::stringstream& file);
-    void loadFunction(std::stringstream& file);
+  void saveFunction(std::fstream &file);
+  void loadFunction(std::fstream &file);
+  void legacyLoadFunction(std::fstream &file);
+  void saveFunction(std::stringstream &file);
+  void loadFunction(std::stringstream &file);
 
-    bool unlock(int _id);
-    bool lock(int _id);
+  bool unlock(int _id);
+  bool lock(int _id);
 
-    int lockedFunc();
-    subfunc* getSubfunc(float x);
+  int lockedFunc();
+  subfunc *getSubfunc(float x);
 
-    QList<subfunc*> funcList;
+  QList<subfunc *> funcList;
 
-    int activeSubfunc;
-    const enum eFunctype type;
-    section* const secParent;
+  int activeSubfunc;
+  const enum eFunctype type;
+  section *const secParent;
+
 private:
-    float startValue;
+  float startValue;
 };
 
 #endif // FUNCTION_H

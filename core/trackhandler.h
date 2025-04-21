@@ -27,31 +27,28 @@ class graphWidget;
 class undoHandler;
 class trackMesh;
 
-class trackHandler
-{
+class trackHandler {
 public:
-    trackHandler(QString _name, int _id);
-    ~trackHandler();
-    void changeID(int _id);
-    int getID();
+  trackHandler(QString _name, int _id);
+  ~trackHandler();
+  void changeID(int _id);
+  int getID();
 
+  track *trackData;
+  QTreeWidgetItem *listItem;
+  trackWidget *trackWidgetItem;
+  graphWidget *graphWidgetItem;
+  int tabId;
 
-    track* trackData;
-    QTreeWidgetItem* listItem;
-    trackWidget* trackWidgetItem;
-    graphWidget* graphWidgetItem;
-    int tabId;
-
-    trackMesh* mMesh;
-    undoHandler* mUndoHandler;
-    QColor trackColors[3];
+  trackMesh *mMesh;
+  undoHandler *mUndoHandler;
+  QColor trackColors[3];
 
 private:
-
-    int id;
-    //mnode* curNode;
-    //section* curSection;
-    //int j;
+  int id;
+  // mnode* curNode;
+  // section* curSection;
+  // int j;
 };
 
 #endif // TRACKHANDLER_H

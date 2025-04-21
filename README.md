@@ -1,14 +1,41 @@
+# open FVD++ v0.8(?) #
 
-# open FVD++ v0.79
-*Stephan (Lenny) Alt, 2012-2016, alt.stephan@web.de*
+Fork of openFVD, originally created by Stephan (Lenny) Alt et al., 2012-2016, alt.stephan@web.de
 
-## Intro
+# Introduction #
 
-Welcome to FVD++, a next generation FVD tool inspired by newton2 (by Keith (Entropy) Cohn).
-It is mainly aimed for coaster enthusiasts creating sophisticated force and geometry based coasters.
-That said the tool is still development and I take no warranty of its usefulness in its current state (see License information below).
+FVD++ revival.
 
-## Changelog
+# Compilation on Windows #
+- Download [Qt 5.14.2](https://download.qt.io/archive/qt/5.14/5.14.2/) for Windows, which should include Qt Creator.
+- Download [glm-0.9.5.1](https://github.com/g-truc/glm/releases/download/0.9.5.1/glm-0.9.5.1.zip).
+- Download [glew-1.12.0-win32](https://sourceforge.net/projects/glew/files/glew/1.12.0/glew-1.12.0-win32.zip/download).
+- Extract both libraries.
+- Change: `INCLUDEPATH += "path\to\fvd_deps\glew-1.12.0\include"`, `INCLUDEPATH += "path\to\fvd_deps\glm"`, `LIBS += "path\to\fvd_deps\glew-1.12.0\lib\Release\x64\glew32.lib"` in `fvd_win.pro`.
+- Compile using the `MinGW-64` kit in Qt Creator.
+
+# Housekeeping #
+
+- `clang-format -style=llvm`
+- Change paths to deps. in `fvd.pro`.
+
+# Changelog #
+
+v0.8 Alpha:
+- added backtrace to fvd.log
+- added export nl2 .csv
+- added new track types (Vekoma and RMC; credit: xwaldo)
+- added track gauge modifier
+- background texture can be resized
+- fixed displacement of csv track after project load
+- fixed issue with poor performance on lNode.deleteAt()
+- fixed nl2 .csv import
+- readd protections: zero velocity in forced sections
+- readd protections: zero velocity in geometric sections
+- removed export to .3ds
+- removed support for macOS
+- removed track wireframe
+- two .stl meshes are loadable
 
 v0.79:
 - added nolimits 2 csv import
@@ -121,29 +148,12 @@ v0.1 Alpha:
 - OpenGL shaders visualising important data (like forces, roll speed and track flexion).
 - PoV mode enabling the ability to check the track inside FVD++
 
+# Thanks to #
 
-## Having Trouble?
+- Lucas van den Bosch for creating the official documentation and YouTube tutorials.
+- Ercan "geforcefan" Akyürek for deploying and testing the tool on Mac systems.
 
-#### I can't use visualizations:
-- The visualizations use OpenGL 3.1 shader technology, make sure your graphics card / drivers support OpenGL 3.1
-
-
-#### I don't know how to do XY:
-- read through the official documentation, this document should explain nearly every feature of FVD++
-- Ask in the force vector design thread on [Nolimits Central](https://nolimitscentral.com/forum/topic/44).
-
-## Found a Bug / Crash
-
-Please let me know if you found a bug / crash either by posting in the NLE forum or by mailing me (alt.stephan@web.de).
-Please include as much information as possible, try to save the track that bugged out and send me the saved .fvd file.
-If the program crashed try to recreate the crash scenario and describe how you got the program to crash in a detailed way.
-
-## Thanks to
-
-- Lucas van den Bosch for creating the official documentation and youtube tutorial channel
-- Ercan "geforcefan" Akyürek for deploying and testing the tool on Mac systems
-
-## License information
+# License information #
 
 FVD++, an advanced coaster design tool for NoLimits and NoLimits2
 Copyright (C) 2012-2015, Stephan "Lenny" Alt <alt.stephan@web.de>

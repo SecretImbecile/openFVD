@@ -25,41 +25,41 @@ class QTreeWidgetItem;
 class track;
 class section;
 
-class smoothHandler
-{
+class smoothHandler {
 public:
-    smoothHandler(track* _track, int _section, char* customChar = NULL, int _length = 400, int _iterations = 1, int _fromNode = 0, int _toNode = -1);
-    ~smoothHandler();
+  smoothHandler(track *_track, int _section, char *customChar = NULL,
+                int _length = 400, int _iterations = 1, int _fromNode = 0,
+                int _toNode = -1);
+  ~smoothHandler();
 
-    void update(char* customChar = NULL);
+  void update(char *customChar = NULL);
 
+  QTreeWidgetItem *treeItem;
 
-    QTreeWidgetItem* treeItem;
+  section *sec;
 
-    section* sec;
+  int getFrom();
+  int getTo();
+  int getLength();
+  int getIterations();
 
-    int getFrom();
-    int getTo();
-    int getLength();
-    int getIterations();
+  void setFrom(int _arg);
+  void setTo(int _arg);
+  void setLength(int _arg);
+  void setIterations(int _arg);
 
-    void setFrom(int _arg);
-    void setTo(int _arg);
-    void setLength(int _arg);
-    void setIterations(int _arg);
+  void saveSmooth(std::fstream &file);
+  void loadSmooth(std::fstream &file);
+  void legacyLoadSmooth(std::fstream &file);
 
-    void saveSmooth(std::fstream& file);
-    void loadSmooth(std::fstream& file);
-    void legacyLoadSmooth(std::fstream& file);
-
-    bool active;
+  bool active;
 
 private:
-    track* m_track;
-    int fromNode;
-    int toNode;
-    int length;
-    int iterations;
+  track *m_track;
+  int fromNode;
+  int toNode;
+  int length;
+  int iterations;
 };
 
 #endif // SMOOTHHANDLER_H

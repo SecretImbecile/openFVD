@@ -25,198 +25,198 @@
 
 using namespace std;
 
-secstraight::secstraight(track* getParent, mnode* first, float getlength) : section(getParent, straight, first)
-{
-    this->fHLength = getlength;
-    this->bArgument = TIME;
-    this->bOrientation = QUATERNION;
-    bSpeed = 0;
-    fVel = 10;
+secstraight::secstraight(track *getParent, mnode *first, float getlength)
+    : section(getParent, straight, first) {
+  this->fHLength = getlength;
+  this->bArgument = TIME;
+  this->bOrientation = QUATERNION;
+  bSpeed = 0;
+  fVel = 10;
 }
 
-void secstraight::changelength(float newlength)
-{
-    this->fHLength = newlength;
-    this->updateSection();
+void secstraight::changelength(float newlength) {
+  this->fHLength = newlength;
+  this->updateSection();
 }
 
-int secstraight::updateSection(int)
-{
-    //this->rollFunc->setMaxArgument(fHLength);
+int secstraight::updateSection(int) {
+  // this->rollFunc->setMaxArgument(fHLength);
 
-    int numNodes = 1;
-    this->length = 0;
-    fHLength = getMaxArgument();
+  int numNodes = 1;
+  this->length = 0;
+  fHLength = getMaxArgument();
 
-    while(lNodes.size() > 1) {
-        lNodes.removeAt(1);
+  while (lNodes.size() > 1) {
+    lNodes.removeAt(1);
+  }
+
+  lNodes[0].updateNorm();
+
+  float diff = lNodes[0].fRollSpeed; // - rollFunc->funcList.at(0)]-startValue;
+  rollFunc->funcList.at(0)->translateValues(diff);
+  rollFunc->translateValues(rollFunc->funcList.at(0));
+
+  bool lastNode = false;
+
+  float fCurLength = 0.0f;
+
+  while (fCurLength < this->fHLength - std::numeric_limits<float>::epsilon() &&
+         !lastNode) {
+    lNodes.append(lNodes.last());
+
+    float dTime;
+    mnode *prevNode = &lNodes[numNodes - 1];
+    mnode *curNode = &lNodes[numNodes];
+
+    if (curNode->fVel < 0.1f) {
+      qWarning("train goes very slowly");
+      break;
+    }
+    if (curNode->fVel / F_HZ < this->fHLength - fCurLength) {
+      dTime = F_HZ;
+    } else {
+      lastNode = true;
+      dTime = (curNode->fVel + std::numeric_limits<float>::epsilon()) /
+              (this->fHLength - fCurLength);
     }
 
-	lNodes[0].updateNorm();
+    curNode->vPos += curNode->vDir * (curNode->fVel / dTime);
 
-	float diff = lNodes[0].fRollSpeed; // - rollFunc->funcList.at(0)]-startValue;
-    rollFunc->funcList.at(0)->translateValues(diff);
-    rollFunc->translateValues(rollFunc->funcList.at(0));
+    fCurLength += curNode->fVel / dTime;
 
-    bool lastNode = false;
+    curNode->setRoll(
+        rollFunc->getValue(fCurLength) /
+        dTime); // rollFunc->getValue((i+1)/10.0) - rollFunc->getValue(i/10.0));
 
-    float fCurLength = 0.0f;
+    curNode->forceNormal = -curNode->vNorm.y;
+    curNode->forceLateral = -curNode->vLat.y;
 
-    while(fCurLength < this->fHLength - std::numeric_limits<float>::epsilon() && !lastNode) {
-        lNodes.append(lNodes.last());
+    curNode->fDistFromLast = glm::distance(curNode->vPosHeart(parent->fHeart),
+                                           prevNode->vPosHeart(parent->fHeart));
+    curNode->fTotalLength += curNode->fDistFromLast;
+    curNode->fHeartDistFromLast = glm::distance(curNode->vPos, prevNode->vPos);
+    curNode->fTotalHeartLength += curNode->fHeartDistFromLast;
 
-        float dTime;
-		mnode* prevNode = &lNodes[numNodes-1];
-		mnode* curNode = &lNodes[numNodes];
+    curNode->fRollSpeed = rollFunc->getValue(fCurLength);
 
-        if(curNode->fVel < 0.1f) {
-            qWarning("train goes very slowly");
-            break;
-        }
-        if(curNode->fVel/F_HZ < this->fHLength - fCurLength) {
-            dTime = F_HZ;
-        } else {
-            lastNode = true;
-            dTime = (curNode->fVel + std::numeric_limits<float>::epsilon())/(this->fHLength - fCurLength);
-        }
-
-        curNode->vPos += curNode->vDir*(curNode->fVel/dTime);
-
-        fCurLength += curNode->fVel/dTime;
-
-        curNode->setRoll(rollFunc->getValue(fCurLength)/dTime); //rollFunc->getValue((i+1)/10.0) - rollFunc->getValue(i/10.0));
-
-        curNode->forceNormal = -curNode->vNorm.y;
-        curNode->forceLateral = -curNode->vLat.y;
-
-        curNode->fDistFromLast = glm::distance(curNode->vPosHeart(parent->fHeart), prevNode->vPosHeart(parent->fHeart));
-        curNode->fTotalLength += curNode->fDistFromLast;
-        curNode->fHeartDistFromLast = glm::distance(curNode->vPos, prevNode->vPos);
-        curNode->fTotalHeartLength += curNode->fHeartDistFromLast;
-
-        curNode->fRollSpeed = rollFunc->getValue(fCurLength);
-
-        calcDirFromLast(numNodes);
-        curNode->fAngleFromLast = 0.0;
-        curNode->fDirFromLast = 0.0;
-        curNode->fYawFromLast = 0.0;
-        curNode->fPitchFromLast = 0.0;
-		if(fabs(lNodes[numNodes].fRollSpeed) < 0.001) {
-            curNode->fTrackAngleFromLast = 0.0;
-        }
-
-        if(bSpeed) {
-            curNode->fEnergy -= (curNode->fVel*curNode->fVel*curNode->fVel/F_HZ * parent->fResistance);
-            curNode->fVel = sqrt(2.f*(curNode->fEnergy-F_G*(curNode->vPosHeart(parent->fHeart*0.9f).y+curNode->fTotalLength*parent->fFriction)));
-        } else {
-            curNode->fVel = this->fVel;
-            curNode->fEnergy = 0.5*fVel*fVel + F_G*(curNode->vPosHeart(parent->fHeart*0.9f).y + curNode->fTotalLength*parent->fFriction);
-        }
-
-        this->length += curNode->fDistFromLast;
-        ++numNodes;
+    calcDirFromLast(numNodes);
+    curNode->fAngleFromLast = 0.0;
+    curNode->fDirFromLast = 0.0;
+    curNode->fYawFromLast = 0.0;
+    curNode->fPitchFromLast = 0.0;
+    if (fabs(lNodes[numNodes].fRollSpeed) < 0.001) {
+      curNode->fTrackAngleFromLast = 0.0;
     }
 
-	while(lNodes.size() > numNodes) {
-		lNodes.removeLast();
-	}
-
-	if(lNodes.size()) length = lNodes.last().fTotalLength - lNodes.first().fTotalLength;
-    else length = 0;
-
-    //qDebug("Straight section Length:%f", this->length);
-    return 0;
-}
-
-float secstraight::getMaxArgument()
-{
-    return rollFunc->getMaxArgument();
-}
-
-void secstraight::saveSection(std::fstream& file)
-{
-    file << "STR";
-    writeBytes(&file, (const char*)&bSpeed, sizeof(bool));
-
-    int namelength = sName.length();
-    std::string name = sName.toStdString();
-
-    writeBytes(&file, (const char*)&namelength, sizeof(int));
-    file << name;
-
-    writeBytes(&file, (const char*)&fVel, sizeof(float));
-    writeBytes(&file, (const char*)&fHLength, sizeof(float));
-    rollFunc->saveFunction(file);
-}
-
-void secstraight::loadSection(std::fstream& file)
-{
-    bSpeed = readBool(&file);
-
-    int namelength = readInt(&file);
-    sName = QString(readString(&file, namelength).c_str());
-
-
-    fVel = readFloat(&file);
-    fHLength = readFloat(&file);
-    rollFunc->loadFunction(file);
-}
-
-void secstraight::legacyLoadSection(std::fstream& file)
-{
-    bSpeed = readBool(&file);
-
-    int namelength = readInt(&file);
-    sName = QString(readString(&file, namelength).c_str());
-
-
-    fVel = readFloat(&file);
-    fHLength = readFloat(&file);
-    rollFunc->legacyLoadFunction(file);
-}
-
-void secstraight::saveSection(std::stringstream& file)
-{
-    file << "STR";
-    writeBytes(&file, (const char*)&bSpeed, sizeof(bool));
-
-    int namelength = sName.length();
-    std::string name = sName.toStdString();
-
-    writeBytes(&file, (const char*)&namelength, sizeof(int));
-    file << name;
-
-    writeBytes(&file, (const char*)&fVel, sizeof(float));
-    writeBytes(&file, (const char*)&fHLength, sizeof(float));
-    rollFunc->saveFunction(file);
-}
-
-void secstraight::loadSection(std::stringstream& file)
-{
-    bSpeed = readBool(&file);
-
-    int namelength = readInt(&file);
-    sName = QString(readString(&file, namelength).c_str());
-
-
-    fVel = readFloat(&file);
-    fHLength = readFloat(&file);
-    rollFunc->loadFunction(file);
-}
-
-bool secstraight::isInFunction(int index, subfunc* func)
-{
-    if(func == NULL) return false;
-    if(index >= lNodes.size()) return false;
-	float dist = lNodes[index].fTotalHeartLength - lNodes[0].fTotalHeartLength;
-    if(dist >= func->minArgument && dist <= func->maxArgument) {
-        return true;
+    if (bSpeed) {
+      curNode->fEnergy -= (curNode->fVel * curNode->fVel * curNode->fVel /
+                           F_HZ * parent->fResistance);
+      curNode->fVel =
+          sqrt(2.f * (curNode->fEnergy -
+                      F_G * (curNode->vPosHeart(parent->fHeart * 0.9f).y +
+                             curNode->fTotalLength * parent->fFriction)));
+    } else {
+      curNode->fVel = this->fVel;
+      curNode->fEnergy = 0.5 * fVel * fVel +
+                         F_G * (curNode->vPosHeart(parent->fHeart * 0.9f).y +
+                                curNode->fTotalLength * parent->fFriction);
     }
+
+    this->length += curNode->fDistFromLast;
+    ++numNodes;
+  }
+
+  while (lNodes.size() > numNodes) {
+    lNodes.removeLast();
+  }
+
+  if (lNodes.size())
+    length = lNodes.last().fTotalLength - lNodes.first().fTotalLength;
+  else
+    length = 0;
+
+  // qDebug("Straight section Length:%f", this->length);
+  return 0;
+}
+
+float secstraight::getMaxArgument() { return rollFunc->getMaxArgument(); }
+
+void secstraight::saveSection(std::fstream &file) {
+  file << "STR";
+  writeBytes(&file, (const char *)&bSpeed, sizeof(bool));
+
+  int namelength = sName.length();
+  std::string name = sName.toStdString();
+
+  writeBytes(&file, (const char *)&namelength, sizeof(int));
+  file << name;
+
+  writeBytes(&file, (const char *)&fVel, sizeof(float));
+  writeBytes(&file, (const char *)&fHLength, sizeof(float));
+  rollFunc->saveFunction(file);
+}
+
+void secstraight::loadSection(std::fstream &file) {
+  bSpeed = readBool(&file);
+
+  int namelength = readInt(&file);
+  sName = QString(readString(&file, namelength).c_str());
+
+  fVel = readFloat(&file);
+  fHLength = readFloat(&file);
+  rollFunc->loadFunction(file);
+}
+
+void secstraight::legacyLoadSection(std::fstream &file) {
+  bSpeed = readBool(&file);
+
+  int namelength = readInt(&file);
+  sName = QString(readString(&file, namelength).c_str());
+
+  fVel = readFloat(&file);
+  fHLength = readFloat(&file);
+  rollFunc->legacyLoadFunction(file);
+}
+
+void secstraight::saveSection(std::stringstream &file) {
+  file << "STR";
+  writeBytes(&file, (const char *)&bSpeed, sizeof(bool));
+
+  int namelength = sName.length();
+  std::string name = sName.toStdString();
+
+  writeBytes(&file, (const char *)&namelength, sizeof(int));
+  file << name;
+
+  writeBytes(&file, (const char *)&fVel, sizeof(float));
+  writeBytes(&file, (const char *)&fHLength, sizeof(float));
+  rollFunc->saveFunction(file);
+}
+
+void secstraight::loadSection(std::stringstream &file) {
+  bSpeed = readBool(&file);
+
+  int namelength = readInt(&file);
+  sName = QString(readString(&file, namelength).c_str());
+
+  fVel = readFloat(&file);
+  fHLength = readFloat(&file);
+  rollFunc->loadFunction(file);
+}
+
+bool secstraight::isInFunction(int index, subfunc *func) {
+  if (func == NULL)
     return false;
+  if (index >= lNodes.size())
+    return false;
+  float dist = lNodes[index].fTotalHeartLength - lNodes[0].fTotalHeartLength;
+  if (dist >= func->minArgument && dist <= func->maxArgument) {
+    return true;
+  }
+  return false;
 }
 
-bool secstraight::isLockable(func* _func)
-{
-    Q_UNUSED(_func)
-    return false;
+bool secstraight::isLockable(func *_func) {
+  Q_UNUSED(_func)
+  return false;
 }

@@ -18,40 +18,38 @@
 
 #include "saver.h"
 
-#include <fstream>
 #include "exportfuncs.h"
+#include <fstream>
 
 using namespace std;
 
-saver::saver(const QString& fileName, projectWidget* _project, QMainWindow* _parent)
-{
-    sFileName = fileName;
-    project = _project;
-    parent = _parent;
+saver::saver(const QString &fileName, projectWidget *_project,
+             QMainWindow *_parent) {
+  sFileName = fileName;
+  project = _project;
+  parent = _parent;
 }
 
-QString saver::doSave()
-{
-    fstream fout(sFileName.toLocal8Bit().data(), ios::out | ios::binary);
-    if(!fout) {
-        return QString("Error: File is NULL");
-    }
+QString saver::doSave() {
+  fstream fout(sFileName.toLocal8Bit().data(), ios::out | ios::binary);
+  if (!fout) {
+    return QString("Error: File is NULL");
+  }
 
-    QString temp = project->saveProject(fout);
+  QString temp = project->saveProject(fout);
 
-    fout.close();
-    return temp;
+  fout.close();
+  return temp;
 }
 
-QString saver::doLoad()
-{
-    fstream fin(sFileName.toLocal8Bit().data(), ios::in | ios::binary);
-    if(!fin) {
-        return QString("Error: File is NULL");
-    }
+QString saver::doLoad() {
+  fstream fin(sFileName.toLocal8Bit().data(), ios::in | ios::binary);
+  if (!fin) {
+    return QString("Error: File is NULL");
+  }
 
-    QString temp = project->loadProject(fin);
+  QString temp = project->loadProject(fin);
 
-    fin.close();
-    return temp;
+  fin.close();
+  return temp;
 }

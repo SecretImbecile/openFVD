@@ -21,167 +21,179 @@
 #*/
 #include <QtCore>
 
-#ifdef Q_OS_OSX
-    #include <gl3.h>
-    #include <gl3ext.h>
-    #include <OpenGL.h>
-    #include <glu.h>
-#endif
+#include "GL/glew.h"
+//#include "GL/glu.h"
 
-#ifndef Q_OS_OSX // on Win / Unix
-    #include "GL/glew.h"
-    #include "GL/glu.h"
-#endif
-
-#include <glm/glm.hpp>
-#include <QtGlobal>
-#include <QGLWidget>
+#include "stlreader.h"
 #include "track.h"
 #include <QElapsedTimer>
-#include <QGLShaderProgram>
 #include <QGLBuffer>
-
+#include <QGLShaderProgram>
+#include <QGLWidget>
+#include <QtGlobal>
+#include <glm/glm.hpp>
 
 #ifdef USE_OVR
-    #include "OVR.h"
-    #include "OVRVersion.h"
+#include "OVR.h"
+#include "OVRVersion.h"
 #endif
 
 class myShader;
 class myTexture;
 class myFramebuffer;
 
-typedef struct mesh_s
-{
-    GLuint object;
-    GLuint buffer;
+typedef struct mesh_s {
+  GLuint object;
+  GLuint buffer;
 } mesh_t;
 
 class MainWindow;
 
-class glViewWidget : public QGLWidget
-{
-    Q_OBJECT
+class glViewWidget : public QGLWidget {
+  Q_OBJECT
 public:
-    explicit glViewWidget(QWidget *parent = 0);
-    ~glViewWidget();
-    void paintGL();
-    QString getGLVersionString();
-    bool loadGroundTexture(QString fileName);
+  explicit glViewWidget(QWidget *parent = 0);
+  ~glViewWidget();
+  void paintGL();
+  QString getGLVersionString();
+  bool loadGroundTexture(QString fileName);
+  void setGroundTextureSize(float _grdTexSize);
 
-    void setBackgroundColor(QColor _background);
+  void loadStlMesh(QString fileName, int meshIndex);
+  bool initStlMesh(int meshIndex);
+  void clearStlMesh();
 
-    int curTrackShader;
-    bool povMode;
-    mnode* povNode;
-    bool paintMode;
-    bool legacyMode;
-    bool riftMode;
-    bool moveMode;
-    int povPos;
-    glm::vec4 cameraMov;
-    double mSec;
-    bool hasChanged;
-    glm::vec3 cameraPos;
+  void setStlColor(QColor _color, int meshIndex);
+
+  void setBackgroundColor(QColor _background);
+
+  int curTrackShader;
+  bool povMode;
+  mnode *povNode;
+  bool paintMode;
+  bool legacyMode;
+  bool riftMode;
+  bool moveMode;
+  int povPos;
+  glm::vec4 cameraMov;
+  double mSec;
+  bool hasChanged;
+  glm::vec3 cameraPos;
+
+  float grdTexSize;
 
 protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
-    void wheelEvent(QWheelEvent *event);
-
+  void initializeGL();
+  void resizeGL(int w, int h);
+  void mousePressEvent(QMouseEvent *event);
+  void mouseMoveEvent(QMouseEvent *event);
+  void keyPressEvent(QKeyEvent *event);
+  void keyReleaseEvent(QKeyEvent *event);
+  void wheelEvent(QWheelEvent *event);
 
 signals:
 
 private:
+  void initFloorMesh();
+  void initTextures();
+  void initShaders();
+  void moveCamera();
+  void buildMatrices(float offset);
+  void updateLoD();
 
-    void initFloorMesh();
-    void initTextures();
-    void initShaders();
-    void moveCamera();
-    void buildMatrices(float offset);
-    void updateLoD();
+  void drawFloor();
+  void drawSky();
 
-    void drawFloor();
-    void drawSky();
-    void drawTrack(trackHandler* _track, bool toNormalMap = false);
-    void drawSimpleSM(trackHandler* _track);
-    void drawShadowVolumes();
-    void drawOcclusion();
-    void drawDebug();
-    void drawOculus();
+  void drawStl(myShader *stlShader, int meshIndex);
 
-    void legacyDrawFloor();
-    void legacyDrawTrack(trackHandler* _track);
+  void drawTrack(trackHandler *_track, bool toNormalMap = false);
+  void drawSimpleSM(trackHandler *_track);
+  void drawShadowVolumes();
+  void drawOcclusion();
+  void drawDebug();
+  void drawOculus();
 
-    QPoint mousePos;
+  void legacyDrawFloor();
+  void legacyDrawTrack(trackHandler *_track);
 
-    glm::vec3 freeFlyPos;
-    glm::vec3 freeFlyDir;
-    glm::vec3 freeFlySide;
-    glm::vec3 cameraDir;
-    float fIPD;
-    float fEyeToScreen;
-    glm::vec4 HmdWarp;
-    float lensSep;
-    float hScreenSize;
-    float vScreenSize;
+  QPoint mousePos;
+
+  glm::vec3 freeFlyPos;
+  glm::vec3 freeFlyDir;
+  glm::vec3 freeFlySide;
+  glm::vec3 cameraDir;
+  float fIPD;
+  float fEyeToScreen;
+  glm::vec4 HmdWarp;
+  float lensSep;
+  float hScreenSize;
+  float vScreenSize;
 #ifdef USE_OVR
-    OVR::SensorDevice* sensor;
-    OVR::SensorFusion* sensFusion;
+  OVR::SensorDevice *sensor;
+  OVR::SensorFusion *sensFusion;
 #endif
-    glm::vec3 headPos;
+  glm::vec3 headPos;
 
-    int cameraJump;
-    float cameraBoost;
-    QColor clearColor;
+  int cameraJump;
+  float cameraBoost;
 
-    glm::mat4x4 ProjectionModelMatrix;
-    glm::mat4x4 ModelMatrix;
-    glm::mat4x4 ProjectionMatrix;
+  QColor clearColor;
+  QVector<QColor> stlColor;
 
-    myTexture* floorTexture;
-    myTexture* rasterTexture;
-    myTexture* metalTexture;
-    myTexture* skyTexture;
+  glm::mat4x4 ProjectionModelMatrix;
+  glm::mat4x4 ModelMatrix;
+  glm::mat4x4 ProjectionMatrix;
 
-    myFramebuffer* simpleShadowFb;
-    myFramebuffer* shadowVolumeFb;
-    myFramebuffer* normalMapFb;
-    myFramebuffer* occlusionFb;
+  myTexture *floorTexture;
+  myTexture *rasterTexture;
+  myTexture *metalTexture;
+  myTexture *skyTexture;
 
-    myFramebuffer* preDistortionFb;
+  myFramebuffer *simpleShadowFb;
+  myFramebuffer *shadowVolumeFb;
+  myFramebuffer *normalMapFb;
+  myFramebuffer *occlusionFb;
 
-    GLuint drawBorder;
+  myFramebuffer *preDistortionFb;
 
-    mesh_t floorMesh;
-    mesh_t skyMesh;
-    myShader* floorShader;
-    myShader* skyShader;
-    myShader* trackShader;
-    myShader* simpleSMShader;
-    myShader* shadowVolumeShader;
-    myShader* normalMapShader;
-    myShader* occlusionShader;
-    myShader* oculusShader;
+  GLuint drawBorder;
 
-    myShader* debugShader;
+  QVector<mesh_t> stlMesh;
 
-    int viewPortWidth, viewPortHeight;
+  mesh_t floorMesh;
+  mesh_t skyMesh;
 
-    QElapsedTimer frameTimer;
-    float renderTime;
-    float lens;
-    float fov;
+  QVector<int> stlCountVertices;
+  QVector<int> stlCountTriangles;
+  QVector<bool> stlLoaded;
 
-    int shadowMode;
-    float floorOpacity;
-    int initialized;
+  QVector<QVector<Triangle>> stlTriangles;
+  QVector<QVector<QVector3D>> stlVertices;
 
-    glm::vec3 lightDir;
+  QVector<myShader *> stlShader;
+
+  myShader *floorShader;
+  myShader *skyShader;
+  myShader *trackShader;
+  myShader *simpleSMShader;
+  myShader *shadowVolumeShader;
+  myShader *normalMapShader;
+  myShader *occlusionShader;
+  myShader *oculusShader;
+  myShader *debugShader;
+
+  int viewPortWidth, viewPortHeight;
+
+  QElapsedTimer frameTimer;
+  float renderTime;
+  float lens;
+  float fov;
+
+  int shadowMode;
+  float floorOpacity;
+  int initialized;
+
+  glm::vec3 lightDir;
 };
 
 #endif // GLVIEWWIDGET_H

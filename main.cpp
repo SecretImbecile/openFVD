@@ -16,88 +16,115 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+//#include "backtrace.h"
+//#include <signal.h>
+
+#include "lenassert.h"
+#include "mainwindow.h"
 #include <QApplication>
-#include <QtDebug>
 #include <QFile>
 #include <QTextStream>
-#include "mainwindow.h"
-#include "lenassert.h"
+#include <QtDebug>
 
-QApplication* application;
+QApplication *application;
 
-#ifdef Q_OS_MAC
-#include "osx/NSApplicationMain.h"
-#endif
+void myMessageHandler(QtMsgType type, const QMessageLogContext &context,
+                      const QString &msg) {
+  FILE *log = fopen("fvd.log", "a");
 
-void myMessageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg)
-{
-    FILE* log = fopen("fvd.log", "a");
-
-    QByteArray localMsg = msg.toLocal8Bit();
-    switch (type) {
-    case QtDebugMsg:
-        printf("%s\n", localMsg.constData());
-        fprintf(log, "%s\n", localMsg.constData());
-        //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        //fprintf(log, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        break;
-    case QtWarningMsg:
-        printf("%s\n", localMsg.constData());
-        fprintf(log, "%s\n", localMsg.constData());
-        //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        //fprintf(log, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        break;
-    case QtCriticalMsg:
-        printf("%s\n", localMsg.constData());
-        fprintf(log, "%s\n", localMsg.constData());
-        //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        //fprintf(log, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        break;
-    case QtFatalMsg:
-        printf("%s\n", localMsg.constData());
-        fprintf(log, "%s\n", localMsg.constData());
-        //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        //fprintf(log, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        abort();
-    }
-    fflush(stdout);
-    fclose(log);
+  QByteArray localMsg = msg.toLocal8Bit();
+  switch (type) {
+  case QtDebugMsg:
+    printf("%s\n", localMsg.constData());
+    fprintf(log, "%s\n", localMsg.constData());
+    //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file,
+    //       context.line, context.function);
+    //fprintf(log, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file,
+    //        context.line, context.function);
+    break;
+  case QtWarningMsg:
+    printf("%s\n", localMsg.constData());
+    fprintf(log, "%s\n", localMsg.constData());
+    //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file,
+    //       context.line, context.function);
+    //fprintf(log, "Warning: %s (%s:%u, %s)\n", localMsg.constData(),
+    //        context.file, context.line, context.function);
+    break;
+  case QtCriticalMsg:
+    printf("%s\n", localMsg.constData());
+    fprintf(log, "%s\n", localMsg.constData());
+    //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file,
+    //       context.line, context.function);
+    //fprintf(log, "Critical: %s (%s:%u, %s)\n", localMsg.constData(),
+    //        context.file, context.line, context.function);
+    break;
+  case QtFatalMsg:
+    printf("%s\n", localMsg.constData());
+    fprintf(log, "%s\n", localMsg.constData());
+    //printf("Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file,
+    //       context.line, context.function);
+    //fprintf(log, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file,
+    //        context.line, context.function);
+    abort();
+  }
+  fflush(stdout);
+  fclose(log);
 }
 
-int main(int argc, char *argv[])
-{
-    application = new QApplication(argc, argv);
-#ifndef Q_OS_MAC
-    qInstallMessageHandler(myMessageHandler);
+// // error callback for the backtrace library
+// void error_callback(void *data, const char *msg, int errnum) {
+//   FILE *log = fopen("fvd.log", "a");
+//   fprintf(log, "Error: %s (error number %d)\n", msg, errnum);
+//   fclose(log);
+// }
 
-    FILE* log = fopen("fvd.log", "w");
-    fprintf(log, "FVD++ v0.77 Logfile\n");
-    fclose(log);
-#endif
+// // full callback for the backtrace library
+// int full_callback(void *data, uintptr_t pc, const char *filename, int lineno,
+//                   const char *function) {
+//   FILE *log = fopen("fvd.log", "a");
+//   fprintf(log, "PC: %p, Function: %s, File: %s, Line: %d\n", (void *)pc,
+//           function, filename, lineno);
+//   fclose(log);
+//   return 0;
+// }
 
-#ifdef Q_OS_MAC
-    QGLFormat fmt;
-    fmt.setProfile(QGLFormat::CoreProfile);
-    fmt.setVersion(3,2);
-    fmt.setSampleBuffers(true);
-    fmt.setSamples(4);
-    QGLFormat::setDefaultFormat(fmt);
-#endif
+// // backtrace error handling
+// void backtrace_error_handling(struct backtrace_state *state) {
+//   backtrace_full(state, 0, full_callback, error_callback, NULL);
+// }
 
-    MainWindow w;
-    w.show();
-    if(argc == 2) {
-        QString fileName(argv[1]);
-        if(fileName.endsWith(".fvd")) {
-            qDebug("starting FVD++ with project %s", argv[1]);
-            w.loadProject(argv[1]);
-        }
+// void handler(int sig) {
+//   struct backtrace_state *state;
+
+//   // initialize the backtrace state
+//   state = backtrace_create_state(NULL, 0, error_callback, NULL);
+
+//   // print the backtrace
+//   backtrace_error_handling(state);
+
+//   abort();
+//   //exit(1);
+// }
+
+int main(int argc, char *argv[]) {
+  application = new QApplication(argc, argv);
+  qInstallMessageHandler(myMessageHandler);
+
+  //signal(SIGSEGV, handler);
+
+  FILE *log = fopen("fvd.log", "w");
+  fprintf(log, "FVD++ v0.8a Logfile\n");
+  fclose(log);
+
+  MainWindow w;
+  w.show();
+  if (argc == 2) {
+    QString fileName(argv[1]);
+    if (fileName.endsWith(".fvd")) {
+      qDebug("Starting FVD++ with project %s", argv[1]);
+      w.loadProject(argv[1]);
     }
+  }
 
-
-#ifdef Q_OS_MAC
-    return OwnNSApplicationMain(argc, (const char **)argv);
-#else
-    return application->exec();
-#endif
+  return application->exec();
 }

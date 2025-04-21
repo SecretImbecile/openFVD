@@ -23,28 +23,29 @@
 
 class myTexture;
 
-class myFramebuffer
-{
+class myFramebuffer {
 public:
-    myFramebuffer(int _width, int _height, GLuint _format, GLuint _intFormat, bool _useRenderbuffer = false);
-    void resize(int _width, int _height);
-    ~myFramebuffer();
-    GLuint getHandle();
-    GLuint getTexture();
-    void bind();
-    void clear();
-    void unbind();
-    void setClearColor(float f1, float f2, float f3);
+  myFramebuffer(int _width, int _height, GLuint _format, GLuint _intFormat,
+                bool _useRenderbuffer = false);
+  void resize(int _width, int _height);
+  ~myFramebuffer();
+  GLuint getHandle();
+  GLuint getTexture();
+  void bind();
+  void clear();
+  void unbind();
+  void setClearColor(float f1, float f2, float f3);
+
 private:
-    void printFBStatus();
-    myTexture* target;
-    GLuint handle;
-    GLuint renderbuffer;
-    int width;
-    int height;
-    GLuint format;
-    GLuint intFormat;
-    glm::vec3 clearColor;
+  void printFBStatus();
+  myTexture *target;
+  GLuint handle;
+  GLuint renderbuffer;
+  int width;
+  int height;
+  GLuint format;
+  GLuint intFormat;
+  glm::vec3 clearColor;
 };
 
 #endif // MYFRAMEBUFFER_H

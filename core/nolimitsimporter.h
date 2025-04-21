@@ -22,17 +22,16 @@
 #include "projectwidget.h"
 #include "section.h"
 
-class noLimitsImporter
-{
+class noLimitsImporter {
 public:
-    noLimitsImporter(trackHandler* _track, QString _fileName);
+  noLimitsImporter(trackHandler *_track, QString _fileName);
 
-    bool importAsNlTrack();
-    bool importAsTxt();
+  bool importAsNlTrack();
+  bool importAsTxt();
 
 private:
-    trackHandler* inTrack;
-    QString fileName;
+  trackHandler *inTrack;
+  QString fileName;
 };
 
 #endif // NOLIMITSIMPORTER_H

@@ -17,64 +17,57 @@
 */
 
 #include "trackhandler.h"
-#include "graphwidget.h"
 #include "glviewwidget.h"
-#include "undohandler.h"
-#include "optionsmenu.h"
+#include "graphwidget.h"
 #include "mainwindow.h"
+#include "optionsmenu.h"
 #include "trackmesh.h"
 #include "trackwidget.h"
+#include "undohandler.h"
 #include <QTreeWidgetItem>
 
-extern MainWindow* gloParent;
-extern glViewWidget* glView;
+extern MainWindow *gloParent;
+extern glViewWidget *glView;
 
-trackHandler::trackHandler(QString _name, int _id)
-{
-    id = _id;
-    this->trackData = new track(this, glm::vec3(0.f, 5.f, 0.f), 0, 1.1);
-    trackData->name = _name;
-    this->listItem = new QTreeWidgetItem(id);
-    listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
-    listItem->setText(0, QString().number(id));
-    listItem->setTextAlignment(0, Qt::AlignHCenter | Qt::AlignVCenter);
-    listItem->setText(1, trackData->name);
-    listItem->setCheckState(2, Qt::Checked);
-    graphWidgetItem = new graphWidget(NULL, this);
-    graphWidgetItem->setPalette(gloParent->palette());
-    graphWidgetItem->hide();
-    trackWidgetItem = new trackWidget(NULL, this);
-    trackWidgetItem->setPalette(gloParent->palette());
-    trackWidgetItem->hide();
+trackHandler::trackHandler(QString _name, int _id) {
+  id = _id;
+  this->trackData = new track(this, glm::vec3(0.f, 5.f, 0.f), 0, 1.1);
+  trackData->name = _name;
+  this->listItem = new QTreeWidgetItem(id);
+  listItem->setFlags(listItem->flags() | Qt::ItemIsEditable);
+  listItem->setText(0, QString().number(id));
+  listItem->setTextAlignment(0, Qt::AlignHCenter | Qt::AlignVCenter);
+  listItem->setText(1, trackData->name);
+  listItem->setCheckState(2, Qt::Checked);
+  graphWidgetItem = new graphWidget(NULL, this);
+  graphWidgetItem->setPalette(gloParent->palette());
+  graphWidgetItem->hide();
+  trackWidgetItem = new trackWidget(NULL, this);
+  trackWidgetItem->setPalette(gloParent->palette());
+  trackWidgetItem->hide();
 
-    tabId = -1;
+  tabId = -1;
 
-    trackColors[0] = QColor(20, 20, 130);
-    trackColors[1] = QColor(255, 51, 51);
-    trackColors[2] = QColor(51, 255, 51);
+  trackColors[0] = QColor(20, 20, 130);
+  trackColors[1] = QColor(255, 51, 51);
+  trackColors[2] = QColor(51, 255, 51);
 
-
-    mUndoHandler = new undoHandler(gloParent->mOptions->maxUndoChanges);
-    mMesh = new trackMesh(trackData);
+  mUndoHandler = new undoHandler(gloParent->mOptions->maxUndoChanges);
+  mMesh = new trackMesh(trackData);
 }
 
-trackHandler::~trackHandler()
-{
-    delete trackWidgetItem;
-    delete graphWidgetItem;
-    delete listItem;
-    delete trackData;
-    delete mUndoHandler;
-    delete mMesh;
+trackHandler::~trackHandler() {
+  delete trackWidgetItem;
+  delete graphWidgetItem;
+  delete listItem;
+  delete trackData;
+  delete mUndoHandler;
+  delete mMesh;
 }
 
-void trackHandler::changeID(int _id)
-{
-    id = _id;
-    listItem->setText(0, QString().number(_id));
+void trackHandler::changeID(int _id) {
+  id = _id;
+  listItem->setText(0, QString().number(_id));
 }
 
-int trackHandler::getID()
-{
-    return id;
-}
+int trackHandler::getID() { return id; }

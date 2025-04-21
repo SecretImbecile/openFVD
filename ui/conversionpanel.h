@@ -25,34 +25,33 @@ namespace Ui {
 class conversionPanel;
 }
 
-class conversionPanel : public QDialog
-{
-    Q_OBJECT
-    
+class conversionPanel : public QDialog {
+  Q_OBJECT
+
 public:
-    explicit conversionPanel(QWidget *parent = 0);
-    ~conversionPanel();
-    
+  explicit conversionPanel(QWidget *parent = 0);
+  ~conversionPanel();
+
 private slots:
-    void on_buttonBox_rejected();
+  void on_buttonBox_rejected();
 
-    void on_buttonBox_accepted();
+  void on_buttonBox_accepted();
 
-    void on_mpsSpin_valueChanged(double arg1);
+  void on_mpsSpin_valueChanged(double arg1);
 
-    void on_kphSpin_valueChanged(double arg1);
+  void on_kphSpin_valueChanged(double arg1);
 
-    void on_mphSpin_valueChanged(double arg1);
+  void on_mphSpin_valueChanged(double arg1);
 
-    void on_meterSpin_valueChanged(double arg1);
+  void on_meterSpin_valueChanged(double arg1);
 
-    void on_feetSpin_valueChanged(double arg1);
+  void on_feetSpin_valueChanged(double arg1);
 
-    void on_mileSpin_valueChanged(double arg1);
+  void on_mileSpin_valueChanged(double arg1);
 
 private:
-    Ui::conversionPanel *ui;
-    bool phantomChanges;
+  Ui::conversionPanel *ui;
+  bool phantomChanges;
 };
 
 #endif // CONVERSIONPANEL_H

@@ -19,20 +19,19 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QDoubleSpinBox>
 #include <QApplication>
+#include <QDoubleSpinBox>
 
-class myQDoubleSpinBox : public QDoubleSpinBox
-{
+class myQDoubleSpinBox : public QDoubleSpinBox {
 public:
-    myQDoubleSpinBox(QWidget* parent = 0);
-    virtual ~myQDoubleSpinBox();
-    virtual void wheelEvent(QWheelEvent *event);
+  myQDoubleSpinBox(QWidget *parent = 0);
+  virtual ~myQDoubleSpinBox();
+  virtual void wheelEvent(QWheelEvent *event);
 
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+  void keyPressEvent(QKeyEvent *event);
+  void keyReleaseEvent(QKeyEvent *event);
 
-    void stepBy(int steps);
+  void stepBy(int steps);
 };
 
 #endif // MYQDOUBLESPINBOX_H

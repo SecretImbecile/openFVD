@@ -19,59 +19,58 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QWidget>
 #include "graphwidget.h"
+#include <QWidget>
 
 namespace Ui {
 class transitionWidget;
 }
 
-class transitionWidget : public QWidget
-{
-    Q_OBJECT
-    
+class transitionWidget : public QWidget {
+  Q_OBJECT
+
 public:
-    explicit transitionWidget(QWidget *parent = 0);
-    ~transitionWidget();
-    void changeSubfunc(subfunc* _newSubfunc);
-    subfunc* getSelectedFunc();
-    void adjustLengthSteps(secType _type, bool _argument);
-    
-    graphWidget* mParent;
+  explicit transitionWidget(QWidget *parent = 0);
+  ~transitionWidget();
+  void changeSubfunc(subfunc *_newSubfunc);
+  subfunc *getSelectedFunc();
+  void adjustLengthSteps(secType _type, bool _argument);
+
+  graphWidget *mParent;
 
 public slots:
-    void on_lengthSpin_valueChanged(double arg1);
+  void on_lengthSpin_valueChanged(double arg1);
 
-    void on_transitionBox_currentIndexChanged(int index);
+  void on_transitionBox_currentIndexChanged(int index);
 
-    void on_changeSpin_valueChanged(double arg1);
+  void on_changeSpin_valueChanged(double arg1);
 
-    void on_quadraticBox_currentIndexChanged(int index);
+  void on_quadraticBox_currentIndexChanged(int index);
 
-    void on_quarticBox_currentIndexChanged(int index);
+  void on_quarticBox_currentIndexChanged(int index);
 
-    void on_quarticSpin_valueChanged(double arg1);
+  void on_quarticSpin_valueChanged(double arg1);
 
-    void on_quinticBox_currentIndexChanged(int index);
+  void on_quinticBox_currentIndexChanged(int index);
 
-    void on_quinticSpin_valueChanged(double arg1);
+  void on_quinticSpin_valueChanged(double arg1);
 
-    void on_centerSpin_valueChanged(double arg1);
+  void on_centerSpin_valueChanged(double arg1);
 
-    void on_tensionSpin_valueChanged(double arg1);
+  void on_tensionSpin_valueChanged(double arg1);
 
-    void on_appendButton_released();
+  void on_appendButton_released();
 
-    void on_prependButton_released();
+  void on_prependButton_released();
 
-    void on_removeButton_released();
+  void on_removeButton_released();
 
-    void on_lockCheck_stateChanged(int arg1);
+  void on_lockCheck_stateChanged(int arg1);
 
 private:
-    Ui::transitionWidget *ui;
-    subfunc* selectedFunc;
-    bool phantomChanges;
+  Ui::transitionWidget *ui;
+  subfunc *selectedFunc;
+  bool phantomChanges;
 };
 
 #endif // TRANSITIONWIDGET_H

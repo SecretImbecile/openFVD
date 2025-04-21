@@ -21,18 +21,16 @@
 
 #include <QTreeWidget>
 
-class myTreeWidget : public QTreeWidget
-{
-    Q_OBJECT
+class myTreeWidget : public QTreeWidget {
+  Q_OBJECT
 public:
-    explicit myTreeWidget(QWidget *parent = 0);
+  explicit myTreeWidget(QWidget *parent = 0);
 
-    virtual QSize sizeHint() const;
-    
+  virtual QSize sizeHint() const;
+
 signals:
-    
+
 public slots:
-    
 };
 
 #endif // MYTREEWIDGET_H

@@ -17,61 +17,57 @@
 */
 
 #include "myqdoublespinbox.h"
-#include <QWheelEvent>
 #include "mainwindow.h"
+#include <QWheelEvent>
 
-extern MainWindow* gloParent;
+extern MainWindow *gloParent;
 
-myQDoubleSpinBox::myQDoubleSpinBox(QWidget* parent) : QDoubleSpinBox(parent)
-{
+myQDoubleSpinBox::myQDoubleSpinBox(QWidget *parent) : QDoubleSpinBox(parent) {}
+
+myQDoubleSpinBox::~myQDoubleSpinBox() {}
+
+void myQDoubleSpinBox::stepBy(int steps) {
+  double jumpBy = steps * singleStep();
+  if (QApplication::keyboardModifiers() == Qt::ControlModifier) {
+    jumpBy *= 0.1;
+  }
+  if (QApplication::keyboardModifiers() == Qt::ShiftModifier) {
+    jumpBy *= 10.;
+  }
+  double newval = this->value() + jumpBy > this->maximum()
+                      ? this->maximum()
+                      : this->value() + jumpBy;
+  newval = newval < this->minimum() ? this->minimum() : newval;
+  this->setValue(newval);
 }
 
-myQDoubleSpinBox::~myQDoubleSpinBox()
-{
+void myQDoubleSpinBox::wheelEvent(QWheelEvent *event) {
+  if (event->modifiers().testFlag(Qt::ControlModifier)) {
+    stepBy(event->delta() / 120);
+  } else {
+    QDoubleSpinBox::wheelEvent(event);
+  }
 }
 
-void myQDoubleSpinBox::stepBy(int steps)
-{
-    double jumpBy = steps*singleStep();
-    if(QApplication::keyboardModifiers() == Qt::ControlModifier) {
-        jumpBy *= 0.1;
-    }
-    if(QApplication::keyboardModifiers() == Qt::ShiftModifier) {
-        jumpBy *= 10.;
-    }
-    double newval = this->value()+jumpBy > this->maximum() ? this->maximum() : this->value()+jumpBy;
-    newval = newval < this->minimum() ? this->minimum() : newval;
-    this->setValue(newval);
+void myQDoubleSpinBox::keyPressEvent(QKeyEvent *event) {
+  if (event->modifiers().testFlag(Qt::ControlModifier) &&
+      event->key() == Qt::Key_Z) {
+    gloParent->on_actionUndo_triggered();
+    event->ignore();
+  } else if (event->modifiers().testFlag(Qt::ControlModifier) &&
+             event->key() == Qt::Key_Y) {
+    gloParent->on_actionRedo_triggered();
+    event->ignore();
+  } else {
+    QDoubleSpinBox::keyPressEvent(event);
+  }
 }
 
-void myQDoubleSpinBox::wheelEvent(QWheelEvent *event)
-{
-    if (event->modifiers().testFlag(Qt::ControlModifier)) {
-        stepBy(event->delta()/120);
-    } else {
-       QDoubleSpinBox::wheelEvent(event);
-    }
-}
-
-void myQDoubleSpinBox::keyPressEvent(QKeyEvent* event)
-{
-    if (event->modifiers().testFlag(Qt::ControlModifier) && event->key() == Qt::Key_Z) {
-        gloParent->on_actionUndo_triggered();
-        event->ignore();
-    } else if (event->modifiers().testFlag(Qt::ControlModifier) && event->key() == Qt::Key_Y) {
-        gloParent->on_actionRedo_triggered();
-        event->ignore();
-    } else {
-        QDoubleSpinBox::keyPressEvent(event);
-    }
-}
-
-void myQDoubleSpinBox::keyReleaseEvent(QKeyEvent* event)
-{
-    if (event->modifiers().testFlag(Qt::ControlModifier)) {
-        gloParent->keyReleased(event);
-        event->ignore();
-    } else {
-        QDoubleSpinBox::keyReleaseEvent(event);
-    }
+void myQDoubleSpinBox::keyReleaseEvent(QKeyEvent *event) {
+  if (event->modifiers().testFlag(Qt::ControlModifier)) {
+    gloParent->keyReleased(event);
+    event->ignore();
+  } else {
+    QDoubleSpinBox::keyReleaseEvent(event);
+  }
 }

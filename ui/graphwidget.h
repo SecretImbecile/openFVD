@@ -19,9 +19,9 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QWidget>
-#include <QList>
 #include "graphhandler.h"
+#include <QList>
+#include <QWidget>
 
 class dragLabel;
 class transitionWidget;
@@ -32,45 +32,43 @@ namespace Ui {
 class graphWidget;
 }
 
-class graphWidget : public QWidget
-{
-    Q_OBJECT
-    
+class graphWidget : public QWidget {
+  Q_OBJECT
+
 public:
-    explicit graphWidget(QWidget *parent, trackHandler* _track = 0);
-    virtual ~graphWidget();
-    void drawGraph(int index);
-    bool drawPoVLine();
-    void undrawGraph(int index);
-    void curSectionChanged(sectionHandler* _section);
-    void activateGraph(graphHandler* curGraph);
-    void deactivateGraph(graphHandler* curGraph);
-    void redrawGraphs(bool otherArgument = false);
-    bool changeSelection(subfunc* _sel);
-    void keyPressEvent(QKeyEvent* event);
+  explicit graphWidget(QWidget *parent, trackHandler *_track = 0);
+  virtual ~graphWidget();
+  void drawGraph(int index);
+  bool drawPoVLine();
+  void undrawGraph(int index);
+  void curSectionChanged(sectionHandler *_section);
+  void activateGraph(graphHandler *curGraph);
+  void deactivateGraph(graphHandler *curGraph);
+  void redrawGraphs(bool otherArgument = false);
+  bool changeSelection(subfunc *_sel);
+  void keyPressEvent(QKeyEvent *event);
 
-    trackHandler* selTrack;
-    subfunc* selFunc;
-    transitionWidget* transitionHandler;
+  trackHandler *selTrack;
+  subfunc *selFunc;
+  transitionWidget *transitionHandler;
 
-    QCPAxis* yAxes[4];
-
+  QCPAxis *yAxes[4];
 
 public slots:
-    void on_selTree_itemChanged(QTreeWidgetItem *item, int column);
-    void MousePressedPlotter();
-    void setPlotRanges();
-    void MouseWheelPlotter();
-    void selectionChanged();
+  void on_selTree_itemChanged(QTreeWidgetItem *item, int column);
+  void MousePressedPlotter();
+  void setPlotRanges();
+  void MouseWheelPlotter();
+  void selectionChanged();
 
-    void on_plotter_customContextMenuRequested(const QPoint &pos);
-    void setBezPoints();
+  void on_plotter_customContextMenuRequested(const QPoint &pos);
+  void setBezPoints();
 
 private:
-    Ui::graphWidget *ui;
-    QList<graphHandler*> pGraphList;
-    QList<dragLabel*> bezPoints;
-    bool phantomChanges;
+  Ui::graphWidget *ui;
+  QList<graphHandler *> pGraphList;
+  QList<dragLabel *> bezPoints;
+  bool phantomChanges;
 };
 
 #endif // GRAPHWIDGET_H

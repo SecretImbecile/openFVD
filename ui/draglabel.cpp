@@ -19,32 +19,25 @@
 #include "draglabel.h"
 #include <QtGui>
 
-dragLabel::dragLabel(QWidget *parent) :
-    QLabel(parent)
-{
-    isDragged = false;
-    x = this->pos().x();
-    y = this->pos().y();
+dragLabel::dragLabel(QWidget *parent) : QLabel(parent) {
+  isDragged = false;
+  x = this->pos().x();
+  y = this->pos().y();
 }
 
-void dragLabel::mousePressEvent(QMouseEvent *event)
-{
-    isDragged = true;
-    fromx = event->pos().x();
-    fromy = event->pos().y();
-    return;
+void dragLabel::mousePressEvent(QMouseEvent *event) {
+  isDragged = true;
+  fromx = event->pos().x();
+  fromy = event->pos().y();
+  return;
 }
 
-void dragLabel::mouseReleaseEvent(QMouseEvent *)
-{
-    isDragged = false;
-}
+void dragLabel::mouseReleaseEvent(QMouseEvent *) { isDragged = false; }
 
-void dragLabel::mouseMoveEvent(QMouseEvent *event)
-{
-    int deltax = event->pos().x() - fromx;
-    int deltay = event->pos().y() - fromy;
-    x += deltax;
-    y += deltay;
-    move(x, y);
+void dragLabel::mouseMoveEvent(QMouseEvent *event) {
+  int deltax = event->pos().x() - fromx;
+  int deltay = event->pos().y() - fromy;
+  x += deltax;
+  y += deltay;
+  move(x, y);
 }

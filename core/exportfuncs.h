@@ -19,14 +19,16 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-#include <fstream>
-#include <sstream>
 #include "mnode.h"
+#include <fstream>
+#include <iomanip>
+#include <sstream>
 
-void writeBytes(std::fstream *file, const char* data, size_t length );
+void writeBytes(std::fstream *file, const char *data, size_t length);
 
-void writeNulls(std::fstream *file , size_t length );
+void writeFloats(std::fstream *file, const float data);
+
+void writeNulls(std::fstream *file, size_t length);
 
 std::string readString(std::fstream *file, size_t length);
 
@@ -40,12 +42,11 @@ int readInt(std::fstream *file);
 
 bool readBool(std::fstream *file);
 
-void readBytes(std::fstream *file, void* _ptr, size_t length);
+void readBytes(std::fstream *file, void *_ptr, size_t length);
 
+void writeBytes(std::stringstream *file, const char *data, size_t length);
 
-void writeBytes(std::stringstream *file, const char* data, size_t length );
-
-void writeNulls(std::stringstream *file , size_t length );
+void writeNulls(std::stringstream *file, size_t length);
 
 std::string readString(std::stringstream *file, size_t length);
 
@@ -59,9 +60,10 @@ int readInt(std::stringstream *file);
 
 bool readBool(std::stringstream *file);
 
-void readBytes(std::stringstream *file, void* _ptr, size_t length);
+void readBytes(std::stringstream *file, void *_ptr, size_t length);
 
-void writeToExportFile(std::fstream *file, QList<bezier_t*> &bezList);
+void writeToExportFile(std::fstream *file, QList<bezier_t *> &bezList);
 
+void writeToExportFileAscii(std::fstream *file, QList<bezier_t *> &bezList);
 
 #endif // EXPORTFUNCS_H

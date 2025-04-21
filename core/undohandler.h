@@ -23,58 +23,55 @@
 
 class MainWindow;
 
-class undoHandler
-{
+class undoHandler {
 public:
-    undoHandler();
-    undoHandler(int _stackSize = 15);
-    ~undoHandler();
-    void doUndo();
-    void doRedo();
-    void addAction(undoAction* _action);
-    void clearActions();
+  undoHandler();
+  undoHandler(int _stackSize = 15);
+  ~undoHandler();
+  void doUndo();
+  void doRedo();
+  void addAction(undoAction *_action);
+  void clearActions();
 
-    QList<undoAction*> lActions;
-    int maxStackSize;
+  QList<undoAction *> lActions;
+  int maxStackSize;
 
-    int stackIndex;
+  int stackIndex;
 
+  double oldLengthSpinValue;
+  double oldChangeSpinValue;
+  double oldArg1Value;
+  double oldCenterSpinValue;
+  double oldTensionSpinValue;
 
-    double oldLengthSpinValue;
-    double oldChangeSpinValue;
-    double oldArg1Value;
-    double oldCenterSpinValue;
-    double oldTensionSpinValue;
+  int oldTransitionBoxValue;
+  int oldQuadraticBoxValue;
 
-    int oldTransitionBoxValue;
-    int oldQuadraticBoxValue;
+  double oldSegmentLength;
+  double oldCurveDirection;
+  double oldCurveLeadIn;
+  double oldCurveLeadOut;
+  double oldCurveRadius;
+  double oldSegmentSpeed;
 
-    double oldSegmentLength;
-    double oldCurveDirection;
-    double oldCurveLeadIn;
-    double oldCurveLeadOut;
-    double oldCurveRadius;
-    double oldSegmentSpeed;
+  bool oldSpeedState;
 
-    bool oldSpeedState;
+  double oldAnchorPosX;
+  double oldAnchorPosY;
+  double oldAnchorPosZ;
+  double oldAnchorRoll;
+  double oldAnchorPitch;
+  double oldAnchorYaw;
+  double oldAnchorNormal;
+  double oldAnchorLateral;
+  double oldAnchorPitchChange;
+  double oldAnchorYawChange;
+  double oldAnchorSpeed;
+  double oldTrackHeartline;
+  double oldTrackFriction;
+  double oldTrackResistance;
 
-    double oldAnchorPosX;
-    double oldAnchorPosY;
-    double oldAnchorPosZ;
-    double oldAnchorRoll;
-    double oldAnchorPitch;
-    double oldAnchorYaw;
-    double oldAnchorNormal;
-    double oldAnchorLateral;
-    double oldAnchorPitchChange;
-    double oldAnchorYawChange;
-    double oldAnchorSpeed;
-    double oldTrackHeartline;
-    double oldTrackFriction;
-    double oldTrackResistance;
-
-
-    bool busy;
+  bool busy;
 };
 
 #endif // UNDOHANDLER_H
