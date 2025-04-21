@@ -28,6 +28,3 @@
 # qt crap
 *.pro.user
 *.user
-/build
-/.qtcreator
-/release
